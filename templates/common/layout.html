@@ -1,6 +1,6 @@
-<html lang="zh" xmlns:th="https://www.thymeleaf.org"
+<html th:lang="${#locale.toLanguageTag}" xmlns:th="https://www.thymeleaf.org"
       th:class="${theme.config.basic_style.theme_style}"
-      th:fragment="layout (title, canonical, content, isPost)">
+      th:fragment="layout (showTitle, canonical, content, isPost)">
 <th:block th:with="contributor = ${contributorFinder.getContributor(theme.config.basic_info.metadata_name)},
       enableComment = ${baseEnableComment == true && site.comment.enable},
       logonUserName = ${#authentication.name != 'anonymousUser' ? #authentication.name : ''}">

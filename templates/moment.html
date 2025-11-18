@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <th:block
-  th:insert="~{common/layout :: layout (title = ${title} + ' - ' + ${site.title}, canonical = @{/moments}, content = ~{::content}, isPost = true)}"
+  th:insert="~{common/layout :: layout (showTitle = ${#messages.msg('page.moment.browser.title', title, site.title)}, canonical = @{/moments}, content = ~{::content}, isPost = true)}"
   th:with="isJournals = true, enableShare = ${theme.config.page_config.enable_journals_share}, baseEnableComment = ${theme.config.page_config.enable_journals_comment}"
   xmlns:th="https://www.thymeleaf.org">
   <th:block th:fragment="content">
@@ -34,21 +34,21 @@
       </div>
       <div class="journal-operation">
         <span class="journal-operation-item">
-          <a class="like" th:data-id="${moment.metadata.name}" th:aria-label="${(moment.stats.upvote != 0)? moment.stats.upvote : '喜欢'}"
-             th:title="${(moment.stats.upvote != 0)? moment.stats.upvote : '喜欢'}" data-type="Moments" th:data-likes="${moment.stats.upvote}">
+          <a class="like" th:data-id="${moment.metadata.name}" th:aria-label="${(moment.stats.upvote != 0)? moment.stats.upvote : #messages.msg('page.moments.upvote')}"
+             th:title="${(moment.stats.upvote != 0)? moment.stats.upvote : #messages.msg('page.moments.upvote')}" data-type="Moments" th:data-likes="${moment.stats.upvote}">
             <i class="ri-heart-3-line"></i>
-            <em th:text="${(moment.stats.upvote != 0)? moment.stats.upvote : '喜欢'}"></em>
+            <em th:text="${(moment.stats.upvote != 0)? moment.stats.upvote : #messages.msg('page.moments.upvote')}"></em>
           </a>
         </span>
         <span class="journal-operation-item" th:if="${enableComment}">
-          <a class="comment" th:aria-label="${(moment.stats.totalComment != 0)? moment.stats.totalComment : '评论'}"
-             th:title="${(moment.stats.totalComment != 0)? moment.stats.totalComment : '评论'}">
+          <a class="comment" th:aria-label="${(moment.stats.totalComment != 0)? moment.stats.totalComment : #messages.msg('global.comment_title')}"
+             th:title="${(moment.stats.totalComment != 0)? moment.stats.totalComment : #messages.msg('global.comment_title')}">
             <i class="ri-message-3-line"></i>
-            <em th:text="${(moment.stats.totalComment != 0)? moment.stats.totalComment : '评论'}"></em>
+            <em th:text="${(moment.stats.totalComment != 0)? moment.stats.totalComment : #messages.msg('global.comment_title')}"></em>
           </a>
         </span>
         <span class="journal-operation-item" th:if="${enableShare}">
-          <a class="share" aria-label="分享" title="分享"><i class="ri-share-forward-line"></i><em>分享</em></a>
+          <a class="share" th:aria-label="#{page.moments.share}" th:title="#{page.moments.share}"><i class="ri-share-forward-line"></i><em>[[#{page.moments.share}]]</em></a>
         </span>
         <div th:if="${theme.config.page_config.enable_journals_owner}" class="journal-operation-owner" th:title="${moment.owner.displayName}">
           <img th:unless="${#strings.isEmpty(moment.owner.avatar)}" class="avatar" th:src="${moment.owner.avatar}"

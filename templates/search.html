@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <th:block
-        th:insert="~{common/layout :: layout (title = '搜索' + ' - ' + ${site.title}, canonical = @{/search}, content = ~{::content}, isPost = true)}"
+        th:insert="~{common/layout :: layout (showTitle = ${#messages.msg('page.search.browser.title', site.title)}, canonical = @{/search}, content = ~{::content}, isPost = true)}"
         th:with="isJournals = true, enableShare = false, baseEnableComment = false"
         xmlns:th="https://www.thymeleaf.org">
     <th:block th:fragment="content">
         <div class="card card-content search-page">
             <div class="card-tab">
-                <div>[[${#strings.replace(title, ' - ' + site.title, '')}]]</div>
+                <div>[[#{page.search.title}]]</div>
             </div>
             <div class="search-box">
                 <script th:inline="javascript">
@@ -23,6 +23,7 @@
                     var searchResultEmpty = $('#dream-search-result-empty')
                     var searchResultLimit = $('#halo-search-form-limit').val()
                     var timeFormat = [[${theme.config.basic_info.global_time_format}]]
+                    var updateMessage = [[#{page.search.update}]]
                     searchForm.addEventListener('submit', function (event) {
                       event.preventDefault()
                       findResult(searchInput.value)
@@ -103,7 +104,7 @@
                                   '<hr/>\n' +
                                   '<div class="meta">\n' +
                                   '<div></div>\n' +
-                                  '<em>' + '最后更新于 ' + Utils.formatDate(hit.updateTimestamp, timeFormat) + '</em>\n' +
+                                  '<em>' + updateMessage.replace('{0}', Utils.formatDate(hit.updateTimestamp, timeFormat)) + '</em>\n' +
                                   '</div>\n' +
                                   '</div>\n')
                                 // eslint-disable-next-line no-empty
@@ -145,10 +146,10 @@
                             class="text-input"
                             type="search"
                             name="keyword"
-                            placeholder="搜索内容..."
+                            th:placeholder="#{page.search.input.placeholder}"
                             th:value="${searchResult.keyword}"
                     />
-                    <button class="search-form-btn" title="搜索"
+                    <button class="search-form-btn" th:title="#{page.search.button.title}"
                             type="submit">
                         <i class="ri-search-line"></i>
                     </button>

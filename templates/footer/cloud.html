@@ -2,12 +2,9 @@
       th:fragment="footer (footer)"
       th:if="${!#strings.isEmpty(theme.config.basic_info.cloud_by_logo)}"
       th:with="mobileLine = ${footer != null and not #lists.isEmpty(footer.show_style) and #lists.contains(footer.show_style, 'mobile_line')},
-               hideSeparator = ${footer != null and not #lists.isEmpty(footer.show_style) and #lists.contains(footer.show_style, 'hide_separator')}"
-      th:classappend="|${mobileLine ? 'footer-truncation' : ''}${mobileLine and hideSeparator ? ' ' : ''}${hideSeparator ? 'exclusive' : ''}|">
-   本站由<a class="cloud-driven" target="_blank" rel="noopener noreferrer nofollow"
-            th:href="${theme.config.basic_info.cloud_by_url}" aria-label="云服务商" title="云服务商">
-                      <img height="auto" width="auto"
-                           alt="云服务商"
-                           th:src="${theme.config.basic_info.cloud_by_logo}"/>
-                  </a>提供云服务
+               hideSeparator = ${footer != null and not #lists.isEmpty(footer.show_style) and #lists.contains(footer.show_style, 'hide_separator')},
+               html='&lt;a class=&quot;cloud-driven&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer nofollow&quot; href=&quot;' + ${theme.config.basic_info.cloud_by_url} +
+               '&quot; aria-label=&quot;' + #{footer.cloud.name} + '&quot; title=&quot;' + #{footer.cloud.name} + '&quot;&gt;&lt;img height=&quot;auto&quot; width=&quot;auto&quot; alt=&quot;' + #{footer.cloud.name} + '&quot; src=&quot;' + ${theme.config.basic_info.cloud_by_logo} + '&quot;/&gt;&lt;/a&gt;'"
+      th:classappend="|${mobileLine ? 'footer-truncation' : ''}${mobileLine and hideSeparator ? ' ' : ''}${hideSeparator ? 'exclusive' : ''}|"
+      th:utext="${#messages.msg('footer.cloud.desc', html)}">
 </span>

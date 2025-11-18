@@ -7,6 +7,6 @@
    th:aria-label="${theme.config.basic_info.record_number_ps}" th:title="${theme.config.basic_info.record_number_ps}"
    th:href="'https://beian.mps.gov.cn/#/query/webSearch?code=' + ${theme.config.basic_info.record_number_ps.replaceAll('[^\d]', '')}" target="_blank" rel="noopener noreferrer nofollow">
     <img
-            th:src="${#theme.assets('/img/ga.webp')}" height="auto" width="auto" alt="公网安备"
+            th:src="${#theme.assets('/img/ga.webp')}" height="auto" width="auto" th:alt="#{footer.ga.name}"
             style="vertical-align: text-top; width: 1.2em; margin-right: 4px;"/>[[${theme.config.basic_info.record_number_ps}]]
 </a>

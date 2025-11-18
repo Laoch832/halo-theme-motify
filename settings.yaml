@@ -1697,7 +1697,7 @@ spec:
           label: 安全链接页面-页面标题
           value: '{title}-安全中心'
           placeholder: '请输入安全链接页面的页面标题'
-          help: '请输入安全链接页面的页面标题，留空显示：“{title}-安全中心”，“ {title} ”表示站点主标题，位置为浏览器显示的标题。'
+          help: '请输入安全链接页面的页面标题，留空默认为：“选择页面的标题 - 站点名”，“ {title} ”表示站点主标题，位置为浏览器显示的标题。'
         - $formkit: text
           name: security_link_site_title
           label: 安全链接页面-站点标题

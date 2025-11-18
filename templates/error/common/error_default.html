@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <th:block xmlns:th="https://www.thymeleaf.org"
           th:fragment="error_fragment"
-          th:insert="~{common/layout :: layout (title = ${error.status + ' - ' + #strings.defaultString(error.title, 'Internal server error')},
+          th:insert="~{common/layout :: layout (showTitle = ${#messages.msg('error.browser.title', error.status, #strings.defaultString(error.title, 'Internal server error'))},
        canonical = ${site.url + '/' + error.status}, content = ~{::content}, isPost = true)}">
     <th:block th:fragment="content"
     th:with="posts = ${postFinder.list(1,6)}, isEmpty = ${#lists.isEmpty(posts)}">
         <div class="card">
-            <div class="title card-content main-title" th:text="${error.status + '错误 - ' + site.title}"></div>
+            <div class="title card-content main-title" th:text="${#messages.msg('error.default.title', error.status, site.title)}"></div>
         </div>
         <div class="card">
             <div class="card-content">
                 <div class="main-content">
-                    <div style="margin: 20px 0; text-align: center; ">
+                    <div style="margin: 20px 0; text-align: center; "  th:with="title=#{global.route.back.home.name},
+                                               linkHtml='&lt;a href=&quot;/&quot; aria-label=&quot;' + ${title} + '&quot; title=&quot;' + ${title} + '&quot;&gt;' + ${title} + '&lt;/a&gt;',
+                                               finalMessage=${#messages.msg('error.default.e404.tip', linkHtml)}">
                         <i style="font-size: 7rem" th:text="${error.status}"></i>
-                        <p th:if="${error.status == 404}" style="font-size: 1.4em;text-indent: 2em;">找不到网页，可能已被删除，去<a href='/' aria-label="首页" title="首页">首页</a>看看吧。</p>
-                        <p th:unless="${error.status == 404}" style="font-size: 1.4em;text-indent: 2em;">围观群众太过热情，服务器繁忙，请稍后访问。</p>
+                        <p th:if="${error.status == 404}" style="font-size: 1.4em;text-indent: 2em;">[(${finalMessage})}</p>
+                        <p th:unless="${error.status == 404}" style="font-size: 1.4em;text-indent: 2em;">[[#{error.default.other.tip}]]</p>
                     </div>
                 </div>
             </div>
         </div>
         <th:block th:if="${!isEmpty}">
             <div class="card">
-                <div class="title card-content main-title">最新文章推荐</div>
+                <div class="title card-content main-title">[[#{error.default.latest.posts}]]</div>
             </div>
             <th:block th:replace="~{main/article_list :: articleList (${posts.items})}"/>
         </th:block>

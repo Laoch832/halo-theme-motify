@@ -7,6 +7,6 @@
    th:aria-label="${theme.config.basic_info.record_number}" th:title="${theme.config.basic_info.record_number}"
    href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank" rel="noopener noreferrer nofollow">
     <img
-            th:src="${#theme.assets('/img/ba.webp')}" height="auto" width="auto" alt="备案"
+            th:src="${#theme.assets('/img/ba.webp')}" height="auto" width="auto" th:alt="#{footer.icp.name}"
             style="vertical-align: text-top; width: 1.2em; margin-right: 4px;"/>[[${theme.config.basic_info.record_number}]]
 </a>

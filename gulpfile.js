@@ -13,6 +13,7 @@ const fs = require('fs')
 const resolve = (name) => path.resolve(__dirname, name)
 const cssPath = './templates/assets/css'
 const jsPath = './templates/assets/js'
+const i18nPath = './i18n'
 const distPath = './dist'
 const devModel = process.env.npm_config_devel
 let version = process.env.npm_config_tag
@@ -139,7 +140,7 @@ task('js', () => {
 })
 
 task('zip', () => {
-  const target = ['./templates/**', './*.yaml', 'README.md', 'LICENSE']
+  const target = ['./templates/**', './*.yaml', 'README.md', 'LICENSE' , './i18n/**']
   return src(target, {base: '.'})
     .pipe(zip('theme-dream2-plus' + (version ? ('-' + version) : '') + '.zip'))
     .pipe(dest(distPath))

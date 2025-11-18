@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="https://www.thymeleaf.org"
+<html th:lang="${#locale.toLanguageTag}" xmlns:th="https://www.thymeleaf.org"
       th:class="${theme.config.basic_style.theme_style}"
       th:with="urlCode = ${param.target},
                url = ${#strings.defaultString(#uris.unescapePath(urlCode), '/')},
-               title = ${singlePage.spec.title} + ' - ' + ${site.title},
+               title = ${#messages.msg('page.security_link.browser.title', singlePage.spec.title, site.title)},
                contributor = ${contributorFinder.getContributor(theme.config.basic_info.metadata_name)},
                enableComment = false, isPost = false, canonical = ${theme.config.security_link_config.security_link_url}">
 <head>
@@ -14,7 +14,7 @@
     <meta name="robots" content="noindex, nofollow"/>
     <title th:with="t = ${theme.config.security_link_config.security_link_page_title},
     t1 = ${#strings.replace(t, '{title}', site.title)}"
-    th:text="${#strings.isEmpty(t) ? site.title + '-安全中心' : t1}">
+    th:text="${#strings.isEmpty(t) ? (title) : t1}">
     </title>
     <link rel="preload stylesheet" as="style" th:href="@{/assets/css/theme.min.css(mew=${theme.spec.version})}">
     <script th:src="@{/assets/lib/jquery@3.5.1/jquery.min.js}"></script>
@@ -389,18 +389,19 @@
                       th:text="${t1}"></span>
             </div>
             <div class="others">
-                <div class="others-tip" th:utext="${#strings.defaultString(theme.config.security_link_config.security_link_tip_desc, '请注意您的账号和财产安全！')}">
+                <div class="others-tip" th:utext="${#strings.defaultString(theme.config.security_link_config.security_link_tip_desc, #messages.msg('page.security_link.security_link_tip'))}">
                 </div>
                 <div class="others-topic">
                 </div>
                 <div class="progress-bar">
                     <div class="progress"></div>
                 </div>
-                <div class="countdown-text">
-                    <i class="ri-flashlight-fill"></i>将在 <span id="countdown">[[${theme.config.security_link_config.security_link_auto_jump_time}]]</span> 秒后跳转，请自行确认链接安全性
+                <div class="countdown-text" th:with="linkHtml='&lt;span id=&quot;countdown&quot;&gt;' + ${theme.config.security_link_config.security_link_auto_jump_time} + '&lt;/span&gt;',
+                    finalMessage=${#messages.msg('page.security_link.countdown_tip', linkHtml)}">
+                    <i class="ri-flashlight-fill"></i>[(${finalMessage})]
                 </div>
                 <div class="others-end">
-                    <a target="_self" href="/" aria-label="继续访问" title="继续访问">继续访问</a>
+                    <a target="_self" href="/" th:aria-label="#{page.security_link.button.continue}" th:title="#{page.security_link.button.continue}">[[#{page.security_link.button.continue}]]</a>
                 </div>
             </div>
         </div>

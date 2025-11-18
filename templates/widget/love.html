@@ -1,8 +1,8 @@
 <div xmlns:th="https://www.thymeleaf.org"
      th:fragment="widget (sidebar)"
      th:class="'card widget love brightness ' + ${sidebar.hide}">
-  <div class="card-title">
-    <i th:class="${#strings.defaultString(sidebar.icon, 'ri-heart-fill') + ' card-title-label'}"></i><span th:text="${#strings.defaultString(sidebar.title, '恋爱墙')}"></span>
+  <div class="card-title" th:with="defaultTitle=#{widget.love.title}">
+    <i th:class="${#strings.defaultString(sidebar.icon, 'ri-heart-fill') + ' card-title-label'}"></i><span th:text="${#strings.defaultString(sidebar.title, defaultTitle)}"></span>
   </div>
   <div class="card-content">
     <div class="love-content">
@@ -10,9 +10,9 @@
         <div class="level-item">
           <a class="avatar"
              target="_blank"
-             aria-label="自己的主页" title="自己的主页"
+             th:aria-label="#{widget.love.self}" th:title="#{widget.love.self}"
              th:href="${theme.config.sidebar.love_oneself_url}">
-            <img class="avatar-image" th:src="${theme.config.sidebar.love_oneself_avatar}" alt="自己的头像">
+            <img class="avatar-image" th:src="${theme.config.sidebar.love_oneself_avatar}" th:alt="#{widget.love.self}">
           </a>
         </div>
         <div class="level-item">
@@ -26,9 +26,9 @@
         <div class="level-item">
           <a class="avatar"
              target="_blank"
-             aria-label="对方的主页" title="对方的主页"
+             th:aria-label="#{widget.love.lover}" th:title="#{widget.love.lover}"
              th:href="${theme.config.sidebar.love_opposite_url}">
-            <img class="avatar-image" th:src="${theme.config.sidebar.love_opposite_avatar}" alt="对方的头像">
+            <img class="avatar-image" th:src="${theme.config.sidebar.love_opposite_avatar}" alt="#{widget.love.lover}">
           </a>
         </div>
       </div>

@@ -73,6 +73,35 @@
     DreamConfig["site_title"] = [[${site.title}]];
     /** 灰色模式 */
     DreamConfig["gray_mode"] = [[${theme.config.enhance.gray_mode_group.enable_gray_mode}]];
+    DreamConfig["site_time_expression"]=[[#{footer.site_time.desc}]];
+    DreamConfig['love_time_template'] = [[#{widget.love.time.template}]];
+    DreamConfig["love_time_template_year"] = [[#{widget.love.time.template_year}]];
+    DreamConfig["timelife_template"] = [
+      {
+        title: [[#{widget.timelife.hour.title}]],
+        endTitle: [[#{widget.timelife.hour.end_title}]],
+        num: 0,
+        percent: '0%',
+      },
+      {
+        title: [[#{widget.timelife.week.title}]],
+        endTitle: [[#{widget.timelife.week.end_title}]],
+        num: 0,
+        percent: '0%',
+      },
+      {
+        title: [[#{widget.timelife.month.title}]],
+        endTitle: [[#{widget.timelife.month.end_title}]],
+        num: 0,
+        percent: '0%',
+      },
+      {
+        title: [[#{widget.timelife.year.title}]],
+        endTitle: [[#{widget.timelife.year.end_title}]],
+        num: 0,
+        percent: '0%',
+      },
+    ]
     /** 配置自定义灰色模式时段 */
     let gray_mode_time_list = []
     let custom_gray_mode_time_list = [[${theme.config.enhance.gray_mode_group.gray_mode_time_list}]];
