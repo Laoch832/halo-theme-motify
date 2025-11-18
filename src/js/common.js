@@ -446,7 +446,7 @@ const commonContext = {
   /* 恋爱墙倒计时 */
   loveTime() {
     let $elem = $('.love .love-time')
-    if ($elem.length === 0) return
+    if ($elem.length === 0 || !DreamConfig.love_time_template || !DreamConfig.love_time_template_year) return
     let loveTime = $elem.attr('data-time')
     if (!/^\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2}$/.test(loveTime)) {
       $elem.text(loveTime)
@@ -481,15 +481,23 @@ const commonContext = {
         }
       }
       if (year !== 0) {
-        $elem.html(`${year} 年 ${days} 天 ${hours} 时 ${minutes} 分 ${seconds} 秒`)
+        $elem.html(DreamConfig.love_time_template_year
+          .replace(/\{(\d+)\}/g, (match, p1) => {
+            const values = [year, days, hours, minutes, seconds]
+            return values[p1]
+          }))
       } else {
-        $elem.html(`${days} 天 ${hours} 时 ${minutes} 分 ${seconds} 秒`)
+        $elem.html(DreamConfig.love_time_template
+          .replace(/\{(\d+)\}/g, (match, p1) => {
+            const values = [days, hours, minutes, seconds]
+            return values[p1]
+          }))
       }
     }, 300)
   },
   /* 激活建站倒计时功能 */
   websiteTime() {
-    if (!DreamConfig.website_time) {
+    if (!DreamConfig.website_time || !DreamConfig.site_time_expression) {
       return
     }
     const websiteDate = document.getElementById('websiteDate')
@@ -517,7 +525,12 @@ const commonContext = {
         hours = '0' + hours
       }
       let days = parseInt(difference / 24)
-      websiteDate.innerHTML = `建站<span class="stand">${days}</span>天<span class="stand">${hours}</span>时<span class="stand">${minutes}</span>分<span class="stand">${seconds}</span>秒`
+      //使用时间表达式显示，适配多语言
+      websiteDate.innerHTML = DreamConfig.site_time_expression
+        .replace(/\{(\d+)\}/g, (match, p1) => {
+          const values = [days, hours, minutes, seconds]
+          return `<span class="stand">${values[p1]}</span>`
+        })
     }, 300)
   },
   /* 显示web版权 */
@@ -526,7 +539,7 @@ const commonContext = {
       return
     }
     const webCopyright = document.getElementById('webCopyright')
-    if(!webCopyright) {
+    if (!webCopyright) {
       return
     }
     const now = new Date()
@@ -548,32 +561,7 @@ const commonContext = {
     if (timeLifeHour === new Date().getHours()) {
       return
     }
-    let timelife = [
-      {
-        title: '今日已经过去',
-        endTitle: '小时',
-        num: 0,
-        percent: '0%',
-      },
-      {
-        title: '这周已经过去',
-        endTitle: '天',
-        num: 0,
-        percent: '0%',
-      },
-      {
-        title: '本月已经过去',
-        endTitle: '天',
-        num: 0,
-        percent: '0%',
-      },
-      {
-        title: '今年已经过去',
-        endTitle: '个月',
-        num: 0,
-        percent: '0%',
-      },
-    ]
+    let timelife = DreamConfig.timelife_template
     {
       let nowDate = +new Date()
       let todayStartDate = new Date(new Date().toLocaleDateString()).getTime()

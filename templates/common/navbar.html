@@ -78,17 +78,17 @@
             </nav>
             <div th:if="${pluginFinder.available('PluginSearchWidget')}" class="navbar-search">
                 <button th:if="${theme.config.page_config.search.search_style == 'basic'}"
-                        onclick="javascript:SearchWidget.open();" class="submit" aria-label="搜索" title="搜索"
+                        onclick="javascript:SearchWidget.open();" class="submit" th:aria-label="#{common.navbar.search.button}" th:title="#{common.navbar.search.title}"
                         style="border-radius: 17px;"><i class="ri-search-line"></i></button>
                 <a th:if="${theme.config.page_config.search.search_style == 'form'}" target="_self" href="/search"
-                   class="submit" aria-label="搜索" title="搜索"
+                   class="submit" th:aria-label="#{common.navbar.search.button}" th:title="#{common.navbar.search.button}"
                    style="border-radius: 17px;display: flex;align-items: center;justify-content: center;"><i
                         class="ri-search-line"></i></a>
                 <form data-pjax class="navbar-search" method="get" action="/search"
                       th:if="${theme.config.page_config.search.search_style == 'box'}">
-                    <input id="box-search-content-input" autocomplete="off" placeholder="搜索内容..." name="keyword"
+                    <input id="box-search-content-input" autocomplete="off" th:placeholder="#{common.navbar.search.placeholder}" name="keyword"
                            value="" class="input" type="text"/>
-                    <button type="submit" class="submit" title="搜索" aria-label="搜索"><i class="ri-search-line"></i>
+                    <button type="submit" class="submit" th:aria-label="#{common.navbar.search.button}" th:title="#{common.navbar.search.button}"><i class="ri-search-line"></i>
                     </button>
                     <span class="icon"></span>
                     <nav class="result"
@@ -107,7 +107,7 @@
             <i th:if="${theme.config.page_config.search.search_style == 'basic'}"
                class="ri-search-line navbar-searchicon" onclick="javascript:SearchWidget.open();"></i>
             <a th:if="${theme.config.page_config.search.search_style == 'form' || theme.config.page_config.search.search_style == 'box'}"
-               target="_self" href="/search" class="submit navbar-searchicon" aria-label="搜索按钮"><i
+               target="_self" href="/search" class="submit navbar-searchicon" th:aria-label="#{common.navbar.search.button}" th:title="#{common.navbar.search.button}"><i
                     class="ri-search-line"></i></a>
             <a data-not-pjax th:if="${theme.config.basic_style.show_console == 'console'}" class="navbar-console"
                th:href="${!#strings.isEmpty(logonUserName) ? theme.config.basic_style.console.console_logon_url : theme.config.basic_style.console.console_url}"
@@ -125,45 +125,45 @@
                 </div>
                 <ul class="navbar-logon-group">
                     <li sec:authorize="hasRole('ROLE_super-role')" class="navbar-logon-group-menu">
-                        <a href="/console/posts/editor" data-not-pjax target="_blank" aria-label="新建文章"
-                           title="新建文章"><i
+                        <a href="/console/posts/editor" data-not-pjax target="_blank" th:aria-label="#{common.navbar.logon.new_post}"
+                           th:title="#{common.navbar.logon.new_post}"><i
                                 th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_post_class)}"
-                                th:class="${theme.config.basic_style.logon.console_post_class}"></i>新建文章</a>
+                                th:class="${theme.config.basic_style.logon.console_post_class}"></i>[[#{common.navbar.logon.new_post}]]</a>
                     </li>
                     <li sec:authorize="hasRole('ROLE_super-role')" class="navbar-logon-group-menu">
-                        <a href="/console/single-pages/editor" data-not-pjax target="_blank" aria-label="新建页面"
-                           title="新建页面"><i
+                        <a href="/console/single-pages/editor" data-not-pjax target="_blank" th:aria-label="#{common.navbar.logon.new_single}"
+                           th:title="#{common.navbar.logon.new_single}"><i
                                 th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_single_pages_class)}"
-                                th:class="${theme.config.basic_style.logon.console_single_pages_class}"></i>新建页面</a>
+                                th:class="${theme.config.basic_style.logon.console_single_pages_class}"></i>[[#{common.navbar.logon.new_single}]]</a>
                     </li>
                     <li sec:authorize="hasRole('ROLE_super-role')" class="navbar-logon-group-menu">
-                        <a href="/console/moments" data-not-pjax target="_blank" aria-label="发布瞬间" title="发布瞬间"><i
+                        <a href="/console/moments" data-not-pjax target="_blank" th:aria-label="#{common.navbar.logon.moments}" th:title="#{common.navbar.logon.moments}"><i
                                 th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_moment_class)}"
-                                th:class="${theme.config.basic_style.logon.console_moment_class}"></i>发布瞬间</a>
+                                th:class="${theme.config.basic_style.logon.console_moment_class}"></i>[[#{common.navbar.logon.moments}]]</a>
                     </li>
                     <li th:if="${!#strings.isEmpty(logonUserName)}" class="navbar-logon-group-menu">
-                        <a href="/uc" data-not-pjax target="_blank" aria-label="个人中心" title="个人中心"><i
+                        <a href="/uc" data-not-pjax target="_blank" th:aria-label="#{common.navbar.logon.uc}" th:title="#{common.navbar.logon.uc}"><i
                                 th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_person_class)}"
-                                th:class="${theme.config.basic_style.logon.console_person_class}"></i>个人中心</a>
+                                th:class="${theme.config.basic_style.logon.console_person_class}"></i>[[#{common.navbar.logon.uc}]]</a>
                     </li>
                     <li sec:authorize="hasRole('ROLE_super-role')" class="navbar-logon-group-menu">
-                        <a href="/console" data-not-pjax target="_blank" aria-label="后台管理" title="后台管理"><i
+                        <a href="/console" data-not-pjax target="_blank" th:aria-label="#{common.navbar.logon.console}" th:title="#{common.navbar.logon.console}"><i
                                 th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_manage_class)}"
-                                th:class="${theme.config.basic_style.logon.console_manage_class}"></i>后台管理</a>
+                                th:class="${theme.config.basic_style.logon.console_manage_class}"></i>[[#{common.navbar.logon.console}]]</a>
                     </li>
                     <li th:if="${!#strings.isEmpty(logonUserName)}" class="navbar-logon-group-menu">
                         <a href="/logout" data-not-pjax
                            onclick="this.href = '/logout?redirect_uri=' + encodeURIComponent(window.location.href)"
-                           aria-label="退出登录" title="退出登录"><i
+                           th:aria-label="#{common.navbar.logon.logout}" th:title="#{common.navbar.logon.logout}"><i
                                 th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_logout_class)}"
-                                th:class="${theme.config.basic_style.logon.console_logout_class}"></i>退出登录</a>
+                                th:class="${theme.config.basic_style.logon.console_logout_class}"></i>[[#{common.navbar.logon.logout}]]</a>
                     </li>
                     <li th:if="${#strings.isEmpty(logonUserName)}" class="navbar-logon-group-menu">
                         <a href="/login" data-not-pjax
                            onclick="this.href = '/login?redirect_uri=' + encodeURIComponent(window.location.href)"
-                           aria-label="登录" title="登录"><i
+                           th:aria-label="#{common.navbar.logon.login}" th:title="#{common.navbar.logon.login}"><i
                                 th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_login_class)}"
-                                th:class="${theme.config.basic_style.logon.console_login_class}"></i>登录</a>
+                                th:class="${theme.config.basic_style.logon.console_login_class}"></i>[[#{common.navbar.logon.login}]]</a>
                     </li>
                 </ul>
             </div>
@@ -183,36 +183,43 @@
             <ul class="navbar-slideout-menu" th:if="${!#lists.isEmpty(theme.config.sidebar.custom_stats)}">
                 <li class="item" th:each="itemData,sindex :${theme.config.sidebar.custom_stats}"
                     th:switch="${itemData}">
-                    <div th:case="visit">
+                    <div th:case="visit" th:with="html='&lt;strong&gt;'  + ${stats.visit} + '&lt;/strong&gt;',
+                            finalMessage=${#messages.msg('common.navbar.stats.visit', html)}">
                         <i class="ri-pie-chart-line"></i>
-                        <span>累计收获 <strong th:text="${stats.visit}"></strong> 次访问</span>
+                        <span>[(${finalMessage})]</span>
                     </div>
-                    <div th:case="upvote">
+                    <div th:case="upvote" th:with="html='&lt;strong&gt;'  + ${stats.upvote} + '&lt;/strong&gt;',
+                            finalMessage=${#messages.msg('common.navbar.stats.upvote', html)}">
                         <i class="ri-thumb-up-line"></i>
-                        <span>累计收获 <strong th:text="${stats.upvote}"></strong> 个点赞</span>
+                        <span>[(${finalMessage})]</span>
                     </div>
-                    <div th:case="comment">
+                    <div th:case="comment" th:with="html='&lt;strong&gt;'  + ${stats.comment} + '&lt;/strong&gt;',
+                            finalMessage=${#messages.msg('common.navbar.stats.comment', html)}">
                         <i class="ri-message-2-line"></i>
-                        <span>累计收到 <strong th:text="${stats.comment}"></strong> 条评论</span>
+                        <span>[(${finalMessage})]</span>
                     </div>
-                    <div th:case="category">
+                    <div th:case="category" th:with="html='&lt;strong&gt;'  + ${stats.category} + '&lt;/strong&gt;',
+                            finalMessage=${#messages.msg('common.navbar.stats.category', html)}">
                         <i class="ri-apps-line"></i>
-                        <span>累计创建 <strong th:text="${stats.category}"></strong> 个分类</span>
+                        <span>[(${finalMessage})]</span>
                     </div>
-                    <div th:case="tag" th:with="tagsList = ${tagFinder.listAll()}, tags = ${#lists.size(tagsList)}">
+                    <div th:case="tag" th:with="tagsList = ${tagFinder.listAll()}, tags = ${#lists.size(tagsList)},
+                            html='&lt;strong&gt;'  + ${tags} + '&lt;/strong&gt;',
+                            finalMessage=${#messages.msg('common.navbar.stats.tag', html)}">
                         <i class="ri-price-tag-2-line"></i>
-                        <span>累计创建 <strong th:text="${tags}"></strong> 个标签</span>
+                        <span>[(${finalMessage})]</span>
                     </div>
-                    <div th:case="*">
+                    <div th:case="*" th:with="html='&lt;strong&gt;'  + ${stats.post} + '&lt;/strong&gt;',
+                            finalMessage=${#messages.msg('common.navbar.stats.post', html)}">
                         <i class="ri-edit-circle-line"></i>
-                        <span>累计撰写 <strong th:text="${stats.post}"></strong> 篇文章</span>
+                        <span>[(${finalMessage})]</span>
                     </div>
                 </li>
             </ul>
             <ul class="navbar-slideout-menu not-toc">
                 <li>
                     <div class="link panel">
-                        <span>导航</span>
+                        <span>[[#{common.navbar.navigation.title}]]</span>
                         <i class="ri-arrow-right-s-line"></i>
                     </div>
                     <ul class="slides panel-body panel-side-menu">
@@ -270,7 +277,7 @@
                 </li>
             </ul>
             <ul th:if="${theme.config.basic_style.drawer_toc}" class="navbar-slideout-menu is-toc">
-                <a class="link in" href="#" rel="nofollow" aria-label="目录" title="目录"><span>目录</span></a>
+                <a class="link in" href="#" rel="nofollow" th:aria-label="#{common.navbar.toc.title}" th:title="#{common.navbar.toc.title}"><span>[[#{common.navbar.toc.title}]]</span></a>
                 <div class="toc-content">
                 </div>
             </ul>
@@ -292,51 +299,56 @@
                             <img width="20px" height="20px" th:src="${currentUser.avatar ?: #theme.assets('/img/avatar.svg')}"
                                  th:alt="${currentUser.displayName}"
                             />
-                            <span style="margin-left: 5px;">[[${!#strings.isEmpty(logonUserName) ? currentUser.displayName : '游客'}]]</span>
+                            <span style="margin-left: 5px;" th:with="anonymous = #{common.navbar.logon.anonymous}">[[${!#strings.isEmpty(logonUserName) ? currentUser.displayName : anonymous}]]</span>
                         </div>
                         <i class="ri-arrow-right-s-line"></i>
                     </div>
                     <ul class="slides panel-body panel-side-menu">
                         <li sec:authorize="hasRole('ROLE_super-role')" class="navbar-logon-group-menu">
-                            <a href="/console/posts/editor" data-not-pjax target="_blank" aria-label="新建文章"
-                               title="新建文章"><i
+                            <a href="/console/posts/editor" data-not-pjax target="_blank" th:aria-label="#{common.navbar.logon.new_post}"
+                               th:title="#{common.navbar.logon.new_post}"><i
                                     th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_post_class)}"
-                                    th:class="${theme.config.basic_style.logon.console_post_class}"></i>新建文章</a>
+                                    th:class="${theme.config.basic_style.logon.console_post_class}"></i>[[#{common.navbar.logon.new_post}]]</a>
                         </li>
                         <li sec:authorize="hasRole('ROLE_super-role')" class="navbar-logon-group-menu">
-                            <a href="/console/single-pages/editor" data-not-pjax target="_blank" aria-label="新建页面"
-                               title="新建页面"><i
+                            <a href="/console/single-pages/editor" data-not-pjax target="_blank" th:aria-label="#{common.navbar.logon.new_single}"
+                               th:title="#{common.navbar.logon.new_single}"><i
                                     th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_single_pages_class)}"
-                                    th:class="${theme.config.basic_style.logon.console_single_pages_class}"></i>新建页面</a>
+                                    th:class="${theme.config.basic_style.logon.console_single_pages_class}"></i>[[#{common.navbar.logon.new_single}]]</a>
                         </li>
                         <li sec:authorize="hasRole('ROLE_super-role')" class="navbar-logon-group-menu">
-                            <a href="/console/moments" data-not-pjax target="_blank" aria-label="发布瞬间" title="发布瞬间"><i
+                            <a href="/console/moments" data-not-pjax target="_blank" th:aria-label="#{common.navbar.logon.moments}"
+                               th:title="#{common.navbar.logon.moments}"><i
                                     th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_moment_class)}"
-                                    th:class="${theme.config.basic_style.logon.console_moment_class}"></i>发布瞬间</a>
+                                    th:class="${theme.config.basic_style.logon.console_moment_class}"></i>[[#{common.navbar.logon.moments}]]</a>
                         </li>
                         <li th:if="${!#strings.isEmpty(logonUserName)}" class="navbar-logon-group-menu">
-                            <a href="/uc" data-not-pjax target="_blank" aria-label="个人中心" title="个人中心"><i
+                            <a href="/uc" data-not-pjax target="_blank" th:aria-label="#{common.navbar.logon.uc}"
+                               th:title="#{common.navbar.logon.uc}"><i
                                     th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_person_class)}"
-                                    th:class="${theme.config.basic_style.logon.console_person_class}"></i>个人中心</a>
+                                    th:class="${theme.config.basic_style.logon.console_person_class}"></i>[[#{common.navbar.logon.uc}]]</a>
                         </li>
                         <li sec:authorize="hasRole('ROLE_super-role')" class="navbar-logon-group-menu">
-                            <a href="/console" data-not-pjax target="_blank" aria-label="后台管理" title="后台管理"><i
+                            <a href="/console" data-not-pjax target="_blank" th:aria-label="#{common.navbar.logon.console}"
+                               th:title="#{common.navbar.logon.console}"><i
                                     th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_manage_class)}"
-                                    th:class="${theme.config.basic_style.logon.console_manage_class}"></i>后台管理</a>
+                                    th:class="${theme.config.basic_style.logon.console_manage_class}"></i>[[#{common.navbar.logon.console}]]</a>
                         </li>
                         <li th:if="${!#strings.isEmpty(logonUserName)}" class="navbar-logon-group-menu">
                             <a href="/logout" data-not-pjax
                                onclick="this.href = '/logout?redirect_uri=' + encodeURIComponent(window.location.href)"
-                               aria-label="退出登录" title="退出登录"><i
+                               th:aria-label="#{common.navbar.logon.logout}"
+                               th:title="#{common.navbar.logon.logout}"><i
                                     th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_logout_class)}"
-                                    th:class="${theme.config.basic_style.logon.console_logout_class}"></i>退出登录</a>
+                                    th:class="${theme.config.basic_style.logon.console_logout_class}"></i>[[#{common.navbar.logon.logout}]]</a>
                         </li>
                         <li th:if="${#strings.isEmpty(logonUserName)}" class="navbar-logon-group-menu">
                             <a href="/login" data-not-pjax
                                onclick="this.href = '/login?redirect_uri=' + encodeURIComponent(window.location.href)"
-                               aria-label="登录" title="登录"><i
+                               th:aria-label="#{common.navbar.logon.login}"
+                               th:title="#{common.navbar.logon.login}"><i
                                     th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_login_class)}"
-                                    th:class="${theme.config.basic_style.logon.console_login_class}"></i>登录</a>
+                                    th:class="${theme.config.basic_style.logon.console_login_class}"></i>[[#{common.navbar.logon.login}]]</a>
                         </li>
                     </ul>
                 </li>

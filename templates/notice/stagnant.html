@@ -4,8 +4,9 @@
             <span>[[${theme.config.pop_notice.pop_notice_title}]]</span>
         </div>
         <div class="others-tip">[(${theme.config.pop_notice.pop_notice_content})]</div>
-        <div th:class="|countdown ${#strings.isEmpty(theme.config.pop_notice.pop_notice_btn) ? 'padding' : ''}|">
-            <i class="ri-flashlight-fill"></i>本通知将在 <span id="countdown">[[${theme.config.pop_notice.pop_notice_show_time}]]</span> 秒后自动消失
+        <div th:class="|countdown ${#strings.isEmpty(theme.config.pop_notice.pop_notice_btn) ? 'padding' : ''}|"
+             th:with="html='&lt;span id=&quot;countdown&quot;&gt;'+${theme.config.pop_notice.pop_notice_show_time}+'&lt;/span&gt;'">
+            <i class="ri-flashlight-fill"></i>[(${#messages.msgWithParams('notice.close.tip', html)})]
         </div>
         <div class="others-end" th:if="${!#strings.isEmpty(theme.config.pop_notice.pop_notice_btn)}">
             <button class="notice-close-btn" onclick="closePopupNotice();">[[${theme.config.pop_notice.pop_notice_btn}]]</button>

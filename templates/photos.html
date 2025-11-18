@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <th:block xmlns:th="https://www.thymeleaf.org"
-          th:insert="~{common/layout :: layout (title = ${title} + ' - ' + ${site.title}, canonical = @{/photos}, content = ~{::content}, isPost = false)}"
+          th:insert="~{common/layout :: layout (showTitle = ${#messages.msg('page.moments.browser.title', title, site.title)}, canonical = @{/photos}, content = ~{::content}, isPost = false)}"
           th:with="isPhotos = true">
     <th:block th:fragment="content">
         <div class="card card-content photos">
-            <div class="card-tab"><div>[[${#strings.replace(title, ' - ' + site.title, '')}]]</div></div>
+            <div class="card-tab"><div>[[${title}]]</div></div>
             <div class="photos-teams">
-                <a th:class="${#strings.isEmpty(param.group)? 'item active' : 'item'}" th:href="@{/photos}" aria-label="全部" title="全部">全部</a>
+                <a th:class="${#strings.isEmpty(param.group)? 'item active' : 'item'}" th:href="@{/photos}" th:aria-label="#{page.photos.all.name}" th:title="#{page.photos.all.name}">[[#{page.photos.all.name}]]</a>
                 <a th:each="group : ${groups}" th:aria-label="${group.spec.displayName}" th:title="${group.spec.displayName}" th:class="${#strings.equals(param.group, group.metadata.name)? 'item active' : 'item'}" th:href="@{/photos(group=${group.metadata.name})}" th:text="${group.spec.displayName}"></a>
             </div>
         </div>

@@ -4,11 +4,11 @@
      isPost = ${type == 'Post'},
      thumbnail_img = ${#strings.isEmpty(post.spec.cover) ? #strings.isEmpty(theme.config.post.default_thumbnail) ? '' : theme.config.post.default_thumbnail + (#strings.contains(theme.config.post.default_thumbnail, '?') ? '&' : '?') + 'id=' + post.metadata.name : post.spec.cover},
      wordCountTime = ${#strings.length(#strings.trim(post.content.raw)) / 400},
-     wordCountTimeStr = ${wordCountTime == 0 ? '小于1分钟' : (wordCountTime + '分钟')}">
+     wordCountTimeStr = ${wordCountTime == 0} ? #{main.article.read_time.less} : ${#messages.msg('main.article.read_time', wordCountTime)}">
 
     <div th:if="${!#strings.isEmpty(thumbnail_img)}" class="card widget">
         <div class="cover-image">
-            <img class="cover-image" alt="文章封面"
+            <img class="cover-image" th:alt="${post.spec.title}"
                  th:srcset="|${thumbnail.gen(thumbnail_img, 's')} 400w,
               ${thumbnail.gen(thumbnail_img, 'm')} 800w,
               ${thumbnail.gen(thumbnail_img, 'l')} 1200w,
@@ -30,16 +30,14 @@
                     <li th:if="${theme.config.basic_info.show_upvote && isPost}"><i class="ri-thumb-up-line"></i>[[${post.stats.upvote}]]</li>
                     <li><i class="ri-time-line"></i>[[${wordCountTimeStr}]]</li>
                     <li sec:authorize="hasRole('ROLE_super-role')" th:if="${theme.config.post.show_edit_content}" class="is-hidden-laptop">
-                        <a target="_blank" title="编辑" aria-label="编辑" th:href="@{|/console/${isPost ? 'posts' : 'single-pages'}/editor?name=${post.metadata.name}|}"><i class="ri-edit-2-line"></i>编辑</a></li>
+                        <a target="_blank" th:title="#{main.article.button.edit}" th:aria-label="#{main.article.button.edit}" th:href="@{|/console/${isPost ? 'posts' : 'single-pages'}/editor?name=${post.metadata.name}|}"><i class="ri-edit-2-line"></i>[[#{main.article.button.edit}]]</a></li>
                 </ul>
             </div>
         </div>
     </div>
 
     <div th:if="${!#strings.isEmpty(theme.config.post.invalid_tips_day) && updateInterval > T(java.lang.Long).parseLong(theme.config.post.invalid_tips_day)}"
-         class="card tips brightness"><i class="ri-close-line click-close" data-close=".tips"></i>本文最后更新于
-        [[${#dates.format(post.status.lastModifyTime,theme.config.basic_info.global_time_format)}]]，距今已有 [[${updateInterval}]]
-        天，若文章内容或图片链接失效，请留言反馈。
+         class="card tips brightness"><i class="ri-close-line click-close" data-close=".tips"></i>[[${#messages.msg('main.article.post_expire_prompt', #dates.format(post.status.lastModifyTime,theme.config.basic_info.global_time_format), updateInterval)}]]
     </div>
 
     <div th:if="${!#strings.isEmpty(post.metadata.annotations.get('tips'))}" class="card tips brightness"><i
@@ -61,7 +59,7 @@
                         <li th:if="${theme.config.basic_info.show_upvote && isPost}"><i class="ri-thumb-up-line"></i>[[${post.stats.upvote}]]</li>
                         <li><i class="ri-time-line"></i>[[${wordCountTimeStr}]]</li>
                         <li sec:authorize="hasRole('ROLE_super-role')" th:if="${theme.config.post.show_edit_content}" class="is-hidden-laptop">
-                            <a target="_blank" title="编辑" aria-label="编辑" th:href="@{|/console/${isPost ? 'posts' : 'single-pages'}/editor?name=${post.metadata.name}|}"><i class="ri-edit-2-line"></i>编辑</a></li>
+                            <a target="_blank" th:title="#{main.article.button.edit}" th:aria-label="#{main.article.button.edit}" th:href="@{|/console/${isPost ? 'posts' : 'single-pages'}/editor?name=${post.metadata.name}|}"><i class="ri-edit-2-line"></i>[[#{main.article.button.edit}]]</a></li>
                     </ul>
                     <div th:if="${isPost && !#lists.isEmpty(post.categories)}" class="level-item">
                         <a th:each="cy : ${post.categories}" th:href="${cy.status.permalink}"
@@ -112,7 +110,7 @@
     </th:block>
 
     <div class="card card-content comment-wrapper-z-index" id="comment-wrapper" th:if="${enableComment}">
-        <h3 class="comment-title">评论</h3>
+        <h3 class="comment-title">[[#{global.comment_title}]]</h3>
         <halo:comment
                 group="content.halo.run"
                 th:kind="${type}"

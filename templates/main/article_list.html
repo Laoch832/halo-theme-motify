@@ -5,7 +5,7 @@
             thumbnail_mode = ${(theme.config.post.top_thumbnail_mode == 'grid' || (!post.spec.pinned && theme.config.post.thumbnail_mode == 'grid'))? 'grid' : (!#strings.isEmpty(post.metadata.annotations.get('thumbnail_mode')) && post.metadata.annotations.get('thumbnail_mode') != 'none')? post.metadata.annotations.get('thumbnail_mode') : post.spec.pinned ? theme.config.post.top_thumbnail_mode : theme.config.post.thumbnail_mode}">
     <div th:if="${!#strings.isEmpty(thumbnail_img) && thumbnail_mode == 'back'}" class="card widget card-cover">
       <a th:href="${post.status.permalink}" th:aria-label="${post.spec.title}" th:title="${post.spec.title}">
-        <img class="cover-image" alt="文章封面" th:classappend="${theme.config.basic_info.lazy_enable} ? 'lazyload'" width="auto" height="auto"
+        <img class="cover-image" th:alt="${post.spec.title}" th:classappend="${theme.config.basic_info.lazy_enable} ? 'lazyload'" width="auto" height="auto"
              th:data-srcset="${theme.config.basic_info.lazy_enable} ? |${thumbnail.gen(thumbnail_img, 's')} 400w,
               ${thumbnail.gen(thumbnail_img, 'm')} 800w,
               ${thumbnail.gen(thumbnail_img, 'l')} 1200w,
@@ -18,7 +18,7 @@
              th:src="${theme.config.basic_info.lazy_enable ? '' : thumbnail_img}"
              th:data-src="${!theme.config.basic_info.lazy_enable ? '' : thumbnail_img}"/>
         <div class="details">
-          <h2 class="title"><span class="top" th:if="${post.spec.pinned}">置顶</span>[[${post.spec.title}]]</h2>
+          <h2 class="title"><span class="top" th:if="${post.spec.pinned}">[[#{global.pinned.name}]]</span>[[${post.spec.title}]]</h2>
           <ul class="breadcrumb">
             <li th:text="${#dates.format(post.spec.publishTime, theme.config.basic_info.global_time_format)}"></li>
             <li th:if="${theme.config.basic_info.show_visit}"><i class="ri-eye-line"></i>[[${post.stats.visit}]]</li>
@@ -41,7 +41,7 @@
       th:if="${!#strings.isEmpty(thumbnail_img) && (thumbnail_mode == 'small' || (thumbnail_mode == 'small-alter' && postStat.index % 2 == 0))}"
       class="card widget card-small">
       <a th:href="${post.status.permalink}" th:aria-label="${post.spec.title}" th:title="${post.spec.title}">
-        <img class="small-image" alt="文章封面" th:classappend="${theme.config.basic_info.lazy_enable} ? 'lazyload'" width="auto" height="auto"
+        <img class="small-image" th:alt="${post.spec.title}" th:classappend="${theme.config.basic_info.lazy_enable} ? 'lazyload'" width="auto" height="auto"
              th:data-srcset="${theme.config.basic_info.lazy_enable} ? |${thumbnail.gen(thumbnail_img, 's')} 400w,
               ${thumbnail.gen(thumbnail_img, 'm')} 800w,
               ${thumbnail.gen(thumbnail_img, 'l')} 1200w,
@@ -56,7 +56,7 @@
       </a>
       <div class="card-content main">
         <h2 class="title">
-          <span class="top" th:if="${post.spec.pinned}">置顶</span><a th:aria-label="${post.spec.title}" th:title="${post.spec.title}"
+          <span class="top" th:if="${post.spec.pinned}">[[#{global.pinned.name}]]</span><a th:aria-label="${post.spec.title}" th:title="${post.spec.title}"
           th:href="${post.status.permalink}" th:text="${post.spec.title}"></a>
         </h2>
         <div class="main-content" th:text="${post.status.excerpt}"></div>
@@ -85,7 +85,7 @@
       class="card widget card-small">
       <div class="card-content main">
         <h2 class="title">
-          <span class="top" th:if="${post.spec.pinned}">置顶</span><a th:aria-label="${post.spec.title}" th:title="${post.spec.title}"
+          <span class="top" th:if="${post.spec.pinned}">[[#{global.pinned.name}]]</span><a th:aria-label="${post.spec.title}" th:title="${post.spec.title}"
           th:href="${post.status.permalink}" th:text="${post.spec.title}"></a>
         </h2>
         <div class="main-content" th:text="${post.status.excerpt}"></div>
@@ -108,7 +108,7 @@
         </div>
       </div>
       <a th:href="${post.status.permalink}" th:aria-label="${post.spec.title}" th:title="${post.spec.title}">
-        <img class="small-image" alt="文章封面" th:classappend="${theme.config.basic_info.lazy_enable} ? 'lazyload'" width="auto" height="auto"
+        <img class="small-image" th:alt="${post.spec.title}" th:classappend="${theme.config.basic_info.lazy_enable} ? 'lazyload'" width="auto" height="auto"
              th:data-srcset="${theme.config.basic_info.lazy_enable} ? |${thumbnail.gen(thumbnail_img, 's')} 400w,
               ${thumbnail.gen(thumbnail_img, 'm')} 800w,
               ${thumbnail.gen(thumbnail_img, 'l')} 1200w,
@@ -126,7 +126,7 @@
     <a th:if="${thumbnail_mode == 'fold'}" class="card widget card-fold"
        th:aria-label="${post.spec.title}" th:title="${post.spec.title}"
        th:href="${post.status.permalink}">
-      <h2 class="title"><span th:if="${post.spec.pinned}" class="top">置顶</span>
+      <h2 class="title"><span th:if="${post.spec.pinned}" class="top">[[#{global.pinned.name}]]</span>
         <p th:text="${post.spec.title}"></p></h2>
       <p th:text="${#dates.format(post.spec.publishTime, theme.config.basic_info.global_time_format)}"></p>
     </a>
@@ -136,7 +136,7 @@
       <a th:if="${!#strings.isEmpty(thumbnail_img)}" class="thumbnail"
          th:aria-label="${post.spec.title}" th:title="${post.spec.title}"
          th:href="${post.status.permalink}">
-        <img class="thumbnail-image" alt="文章封面" th:classappend="${theme.config.basic_info.lazy_enable} ? 'lazyload'" width="auto" height="auto"
+        <img class="thumbnail-image" th:alt="${post.spec.title}" th:classappend="${theme.config.basic_info.lazy_enable} ? 'lazyload'" width="auto" height="auto"
              th:data-srcset="${theme.config.basic_info.lazy_enable} ? |${thumbnail.gen(thumbnail_img, 's')} 400w,
               ${thumbnail.gen(thumbnail_img, 'm')} 800w,
               ${thumbnail.gen(thumbnail_img, 'l')} 1200w,
@@ -151,7 +151,7 @@
       </a>
       <div class="card-content main">
         <h2 class="title">
-          <span class="top" th:if="${post.spec.pinned}">置顶</span><a th:aria-label="${post.spec.title}" th:title="${post.spec.title}"
+          <span class="top" th:if="${post.spec.pinned}">[[#{global.pinned.name}]]</span><a th:aria-label="${post.spec.title}" th:title="${post.spec.title}"
           th:href="${post.status.permalink}" th:text="${post.spec.title}"></a>
         </h2>
         <div class="meta">
@@ -184,7 +184,7 @@
         th:if="${(theme.config.post.top_thumbnail_mode == 'grid' || (!post.spec.pinned && theme.config.post.thumbnail_mode == 'grid'))}"
         class="card widget">
         <a class="thumbnail" th:href="${post.status.permalink}" th:aria-label="${post.spec.title}" th:title="${post.spec.title}">
-          <img class="thumbnail-image" alt="文章封面" th:classappend="${theme.config.basic_info.lazy_enable} ? 'lazyload'" width="auto" height="auto"
+          <img class="thumbnail-image" th:alt="${post.spec.title}" th:classappend="${theme.config.basic_info.lazy_enable} ? 'lazyload'" width="auto" height="auto"
                th:data-srcset="${theme.config.basic_info.lazy_enable} ? |${thumbnail.gen(thumbnail_img, 's')} 400w,
               ${thumbnail.gen(thumbnail_img, 'm')} 800w,
               ${thumbnail.gen(thumbnail_img, 'l')} 1200w,
@@ -209,7 +209,7 @@
           </li>
         </ul>
         <h2 class="title">
-          <span class="top" th:if="${post.spec.pinned}">置顶</span>
+          <span class="top" th:if="${post.spec.pinned}">[[#{global.pinned.name}]]</span>
           <a th:aria-label="${post.spec.title}" th:title="${post.spec.title}"
             th:href="${post.status.permalink}" th:text="${post.spec.title}"></a>
         </h2>

@@ -3,6 +3,10 @@ kind: Theme
 metadata:
   # 主题id，唯一
   name: theme-dream2-plus
+  annotations:
+    # Add supports for Halo App Store
+    # https://www.halo.run/store/apps/app-HrMpM
+    "store.halo.run/app-id": "app-HrMpM"
 spec:
   # 主题名称
   displayName: Dream2.0 Plus
