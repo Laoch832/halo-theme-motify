@@ -16,34 +16,33 @@
       </div>
     </nav>
     <nav class="level" th:if="${!#lists.isEmpty(theme.config.sidebar.custom_stats)}"
-         th:with="unitWStr = #{widget.profile.stats.unit.w},
-                  unitBwStr = #{widget.profile.stats.unit.bw},
-                  unitW = 10000,
-                  unitBw = 1000000">
+         th:with="unitW = 1000,
+                  unitBw = 1000000,
+                  unitB = 1000000000">
       <div th:each="item,sindex :${theme.config.sidebar.custom_stats}" class="level-item" th:switch="${item}">
         <div th:case="visit" th:with="visit = ${stats.visit}">
-          <p class="heading" th:text="${#messages.msg('widget.profile.stats.visit', visit / unitBw > 0 ? unitBwStr : (visit / unitW > 0 ? unitWStr : ''))}"></p>
-          <p class="value" th:title="${visit / unitW > 0} ? ${visit}" th:text="${visit / unitBw > 0} ? (${#numbers.formatDecimal(visit / (unitBw * 1.0),1,1)}) : (${visit / unitW > 0} ? (${#numbers.formatDecimal(visit / (unitW * 1.0),1,1)}) : ${visit})"></p>
+          <p class="heading" th:text="${#messages.msg('widget.profile.stats.visit')}"></p>
+          <p class="value" th:title="${visit / unitW > 0} ? ${visit}" th:text="${visit / unitB > 0} ? (${#numbers.formatDecimal(visit / (unitB * 1.0),1,1)} + 'B') : (${visit / unitBw > 0} ? (${#numbers.formatDecimal(visit / (unitBw * 1.0),1,1)} + 'M') : (${visit / unitW > 0} ? (${#numbers.formatDecimal(visit / (unitW * 1.0),1,1)} + 'K') : ${visit}))"></p>
         </div>
         <div th:case="upvote" th:with="upvote = ${stats.upvote}">
-          <p class="heading" th:text="${#messages.msg('widget.profile.stats.upvote', upvote / unitBw > 0 ? unitBwStr : (upvote / unitW > 0 ? unitWStr : ''))}"></p>
-          <p class="value" th:title="${upvote / unitW > 0} ? ${upvote}" th:text="${upvote / unitBw > 0} ? (${#numbers.formatDecimal(upvote / (unitBw * 1.0),1,1)}) : (${upvote / unitW > 0} ? (${#numbers.formatDecimal(upvote / (unitW * 1.0),1,1)}) : ${upvote})"></p>
+          <p class="heading" th:text="${#messages.msg('widget.profile.stats.upvote')}"></p>
+          <p class="value" th:title="${upvote / unitW > 0} ? ${upvote}" th:text="${upvote / unitB > 0} ? (${#numbers.formatDecimal(upvote / (unitB * 1.0),1,1)} + 'B') : (${upvote / unitBw > 0} ? (${#numbers.formatDecimal(upvote / (unitBw * 1.0),1,1)} + 'M') : (${upvote / unitW > 0} ? (${#numbers.formatDecimal(upvote / (unitW * 1.0),1,1)} + 'K') : ${upvote}))"></p>
         </div>
         <div th:case="comment" th:with="comment = ${stats.comment}">
-          <p class="heading" th:text="${#messages.msg('widget.profile.stats.comment', comment / unitBw > 0 ? unitBwStr : (comment / unitW > 0 ? unitWStr : ''))}"></p>
-          <p class="value" th:title="${comment / unitW > 0} ? ${comment}" th:text="${comment / unitBw > 0} ? (${#numbers.formatDecimal(comment / (unitBw * 1.0),1,1)}) : (${comment / unitW > 0} ? (${#numbers.formatDecimal(comment / (unitW * 1.0),1,1)}) : ${comment})"></p>
+          <p class="heading" th:text="${#messages.msg('widget.profile.stats.comment')}"></p>
+          <p class="value" th:title="${comment / unitW > 0} ? ${comment}" th:text="${comment / unitB > 0} ? (${#numbers.formatDecimal(comment / (unitB * 1.0),1,1)} + 'B') : (${comment / unitBw > 0} ? (${#numbers.formatDecimal(comment / (unitBw * 1.0),1,1)} + 'M') : (${comment / unitW > 0} ? (${#numbers.formatDecimal(comment / (unitW * 1.0),1,1)} + 'K') : ${comment}))"></p>
         </div>
         <div th:case="category" th:with="category = ${stats.category}">
-          <p class="heading" th:text="${#messages.msg('widget.profile.stats.category', category / unitBw > 0 ? unitBwStr : (category / unitW > 0 ? unitWStr : ''))}"></p>
-          <p class="value" th:title="${category / unitW > 0} ? ${category}" th:text="${category / unitBw > 0} ? (${#numbers.formatDecimal(category / (unitBw * 1.0),1,1)}) : (${category / unitW > 0} ? (${#numbers.formatDecimal(category / (unitW * 1.0),1,1)}) : ${category})"></p>
+          <p class="heading" th:text="${#messages.msg('widget.profile.stats.category')}"></p>
+          <p class="value" th:title="${category / unitW > 0} ? ${category}" th:text="${category / unitB > 0} ? (${#numbers.formatDecimal(category / (unitB * 1.0),1,1)} + 'B') : (${category / unitBw > 0} ? (${#numbers.formatDecimal(category / (unitBw * 1.0),1,1)} + 'M') : (${category / unitW > 0} ? (${#numbers.formatDecimal(category / (unitW * 1.0),1,1)} + 'K') : ${category}))"></p>
         </div>
         <div th:case="tag" th:with="tagsList = ${tagFinder.listAll()}, tags = ${#lists.size(tagsList)}">
-          <p class="heading" th:text="${#messages.msg('widget.profile.stats.tag', tags / unitBw > 0 ? unitBwStr : (tags / unitW > 0 ? unitWStr : ''))}"></p>
-          <p class="value" th:title="${tags / unitW > 0} ? ${tags}" th:text="${tags / unitBw > 0} ? (${#numbers.formatDecimal(tags / (unitBw * 1.0),1,1)}) : (${tags / unitW > 0} ? (${#numbers.formatDecimal(tags / (unitW * 1.0),1,1)}) : ${tags})"></p>
+          <p class="heading" th:text="${#messages.msg('widget.profile.stats.tag')}"></p>
+          <p class="value" th:title="${tags / unitW > 0} ? ${tags}" th:text="${tags / unitB > 0} ? (${#numbers.formatDecimal(tags / (unitB * 1.0),1,1)} + 'B') : (${tags / unitBw > 0} ? (${#numbers.formatDecimal(tags / (unitBw * 1.0),1,1)} + 'M') : (${tags / unitW > 0} ? (${#numbers.formatDecimal(tags / (unitW * 1.0),1,1)} + 'K') : ${tags}))"></p>
         </div>
         <div th:case="*" th:with="post = ${stats.post}">
-          <p class="heading" th:text="${#messages.msg('widget.profile.stats.post', post / unitBw > 0 ? unitBwStr : (post / unitW > 0 ? unitWStr : ''))}"></p>
-          <p class="value" th:title="${post / unitW > 0} ? ${post}" th:text="${post / 10000000 > 0} ? (${#numbers.formatDecimal(post / (unitBw * 1.0),1,1)}) : (${post / unitW > 0} ? (${#numbers.formatDecimal(post / (unitW * 1.0),1,1)}) : ${post})"></p>
+          <p class="heading" th:text="${#messages.msg('widget.profile.stats.post')}"></p>
+          <p class="value" th:title="${post / unitW > 0} ? ${post}" th:text="${post / unitB > 0} ? (${#numbers.formatDecimal(post / (unitB * 1.0),1,1)} + 'B') : (${post / unitBw > 0} ? (${#numbers.formatDecimal(post / (unitBw * 1.0),1,1)} + 'M') : (${post / unitW > 0} ? (${#numbers.formatDecimal(post / (unitW * 1.0),1,1)} + 'K') : ${post}))"></p>
         </div>
       </div>
     </nav>
