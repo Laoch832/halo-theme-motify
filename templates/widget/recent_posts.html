@@ -6,7 +6,7 @@
      posts = ${postFinder.list({page: 1, size: num, sort: sortCondition})},
      isEmpty = ${#lists.isEmpty(posts.items)}">
     <div class="card-title" th:with="defaultTitle=#{widget.recent_posts.title},
-                    iconContent = ${#strings.defaultString(sidebar.icon, 'ri-history-line')},
+      iconContent = ${sidebar.icon != null and sidebar.icon instanceof T(java.util.Map) and #maps.containsKey(sidebar.icon, 'value') ? (sidebar.icon.value ?: 'ri-history-line') : (sidebar.icon ?: 'ri-history-line')},
                     iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
         <i class="card-title-label"
            th:unless="${iconSvg}"

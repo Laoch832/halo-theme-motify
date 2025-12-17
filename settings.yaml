@@ -290,13 +290,20 @@ spec:
           name: logon
           label: 登录组件样式
           value:
-            console_post_class: 'ri-book-read-line'
-            console_single_pages_class: 'ri-pages-line'
-            console_moment_class: 'ri-camera-lens-line'
-            console_login_class: 'ri-fingerprint-line'
-            console_person_class: 'ri-account-circle-line'
-            console_manage_class: 'ri-settings-3-line'
-            console_logout_class: 'ri-logout-circle-line'
+            console_post_class:
+              value: 'ri-book-read-line'
+            console_single_pages_class:
+              value: 'ri-pages-line'
+            console_moment_class:
+              value: 'ri-camera-lens-line'
+            console_login_class:
+              value: 'ri-fingerprint-line'
+            console_person_class:
+              value: 'ri-account-circle-line'
+            console_manage_class:
+              value: 'ri-settings-3-line'
+            console_logout_class:
+              value: 'ri-logout-circle-line'
           children:
             - $formkit: iconify
               format: svg
@@ -337,7 +344,8 @@ spec:
           name: console
           label: 控制台按钮样式
           value:
-            console_icon: 'ri-equalizer-line'
+            console_icon:
+              value: 'ri-equalizer-line'
             console_title: '控制台'
             console_url: '/console'
             console_target: '_blank'
@@ -973,10 +981,12 @@ spec:
               label: $value.name
           value:
             - name: QQ聊天
-              icon: 'ri-qq-fill'
+              icon:
+                value: 'ri-qq-fill'
               url: tencent://message/?uin=${qq}&Site=&Menu=yes
             - name: 给我发邮件
-              icon: 'ri-mail-fill'
+              icon:
+                value: 'ri-mail-fill'
               url: mailto:邮箱地址
           children:
             - $formkit: text

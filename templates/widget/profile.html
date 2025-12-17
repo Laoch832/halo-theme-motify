@@ -67,7 +67,7 @@
                th:title="${option.name}"
                th:href="${option.url}"
                rel="nofollow noopener noreferrer">
-                <th:block th:with="iconContent = ${option.icon},
+                <th:block th:with="iconContent = ${option.icon != null and option.icon instanceof T(java.util.Map) and #maps.containsKey(option.icon, 'value') ? (option.icon.value ?: '') : (option.icon ?: '')},
                                          iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
                     <i th:unless="${iconSvg}"
                        th:classappend="${iconContent}"></i>
