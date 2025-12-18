@@ -23,10 +23,9 @@
                        th:target="${menuItem.spec.target?.value}"
                        th:with="desc = ${#annotations.getOrDefault(menuItem, 'desc', menuItem.status.displayName)}"
                        th:title="${#strings.isEmpty(desc) ? menuItem.status.displayName : desc}">
-                        <th:block th:if="${#annotations.contains(menuItem, 'icon')}"
-                                  th:with="annoIcon = ${#annotations.get(menuItem, 'icon')},
-                                            iconContent = ${annoIcon != null and annoIcon instanceof T(java.util.Map) and #maps.containsKey(annoIcon, 'value') ? (annoIcon.value ?: '') : (annoIcon ?: '')},
-                                            iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
+                        <th:block th:if="${!#strings.isEmpty(#annotations.getOrDefault(menuItem, 'icon', ''))}"
+                                  th:with="iconContent = ${#annotations.getOrDefault(menuItem, 'icon', '')},
+                                         iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
                             <i class="m-icon"
                                th:unless="${iconSvg}"
                                th:classappend="${iconContent}"></i>
@@ -43,9 +42,8 @@
                                th:aria-label="${menuItem.status.displayName}"
                                th:with="desc = ${#annotations.getOrDefault(menuItem, 'desc', menuItem.status.displayName)}"
                                th:title="${#strings.isEmpty(desc) ? menuItem.status.displayName : desc}">
-                                <th:block th:if="${#annotations.contains(menuItem, 'icon')}"
-                                          th:with="annoIcon = ${#annotations.get(menuItem, 'icon')},
-                                                    iconContent = ${annoIcon != null and annoIcon instanceof T(java.util.Map) and #maps.containsKey(annoIcon, 'value') ? (annoIcon.value ?: '') : (annoIcon ?: '')},
+                                <th:block th:if="${!#strings.isEmpty(#annotations.getOrDefault(menuItem, 'icon', ''))}"
+                                          th:with="iconContent = ${#annotations.getOrDefault(menuItem, 'icon', '')},
                                                     iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
                                     <i class="m-icon"
                                        th:unless="${iconSvg}"
@@ -64,9 +62,8 @@
                                    th:aria-label="${dropdown.status.displayName}"
                                    th:with="desc = ${#annotations.getOrDefault(dropdown, 'desc', dropdown.status.displayName)}"
                                    th:title="${#strings.isEmpty(desc) ? dropdown.status.displayName : desc}">
-                                    <th:block th:if="${#annotations.contains(dropdown, 'icon')}"
-                                              th:with="annoIcon = ${#annotations.get(dropdown, 'icon')},
-                                                        iconContent = ${annoIcon != null and annoIcon instanceof T(java.util.Map) and #maps.containsKey(annoIcon, 'value') ? (annoIcon.value ?: '') : (annoIcon ?: '')},
+                                    <th:block th:if="${!#strings.isEmpty(#annotations.getOrDefault(dropdown, 'icon', ''))}"
+                                              th:with="iconContent = ${#annotations.getOrDefault(dropdown, 'icon', '')},
                                                         iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
                                         <i class="m-icon"
                                            th:unless="${iconSvg}"
@@ -83,9 +80,8 @@
                                            th:aria-label="${dropdownChild.status.displayName}"
                                            th:with="desc = ${#annotations.getOrDefault(dropdownChild, 'desc', dropdownChild.status.displayName)}"
                                            th:title="${#strings.isEmpty(desc) ? dropdownChild.status.displayName : desc}">
-                                            <th:block th:if="${#annotations.contains(dropdownChild, 'icon')}"
-                                                      th:with="annoIcon = ${#annotations.get(dropdownChild, 'icon')},
-                                                                iconContent = ${annoIcon != null and annoIcon instanceof T(java.util.Map) and #maps.containsKey(annoIcon, 'value') ? (annoIcon.value ?: '') : (annoIcon ?: '')},
+                                            <th:block th:if="${!#strings.isEmpty(#annotations.getOrDefault(dropdownChild, 'icon', ''))}"
+                                                      th:with="iconContent = ${#annotations.getOrDefault(dropdownChild, 'icon', '')},
                                                                 iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
                                                 <i class="m-icon"
                                                    th:unless="${iconSvg}"
@@ -138,9 +134,8 @@
                th:target="${!#strings.isEmpty(logonUserName) ? theme.config.basic_style.console.console_logon_target : theme.config.basic_style.console.console_target}"
                th:title="${theme.config.basic_style.console.console_title}"
                th:aria-label="${theme.config.basic_style.console.console_title}">
-                <th:block th:with="annoIcon = ${theme.config.basic_style.console.console_icon},
-                                            iconContent = ${annoIcon != null and annoIcon instanceof T(java.util.Map) and #maps.containsKey(annoIcon, 'value') ? (annoIcon.value ?: 'ri-equalizer-line') : (annoIcon ?: 'ri-equalizer-line')},
-                                            iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
+                <th:block th:with="iconContent = ${#strings.defaultString(theme.config.basic_style.console.console_icon, 'ri-equalizer-line')},
+                                         iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
                     <i th:unless="${iconSvg}"
                        th:classappend="${iconContent}"></i>
                     <th:block th:if="${iconSvg}" th:utext="${iconContent}"></th:block>
@@ -157,10 +152,9 @@
                     <li sec:authorize="hasRole('ROLE_super-role')" class="navbar-logon-group-menu">
                         <a href="/console/posts/editor" data-not-pjax target="_blank" th:aria-label="#{common.navbar.logon.new_post}"
                            th:title="#{common.navbar.logon.new_post}">
-                            <th:block th:if="${null != theme.config.basic_style.logon.console_post_class}"
-                                      th:with="annoIcon = ${theme.config.basic_style.logon.console_post_class},
-                                            iconContent = ${annoIcon != null and annoIcon instanceof T(java.util.Map) and #maps.containsKey(annoIcon, 'value') ? (annoIcon.value ?: '') : (annoIcon ?: '')},
-                                            iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
+                            <th:block th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_post_class)}"
+                                    th:with="iconContent = ${#strings.defaultString(theme.config.basic_style.logon.console_post_class, '')},
+                                         iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
                                 <i th:unless="${iconSvg}"
                                    th:classappend="${iconContent}"></i>
                                 <th:block th:if="${iconSvg}" th:utext="${iconContent}"></th:block>
@@ -169,10 +163,9 @@
                     <li sec:authorize="hasRole('ROLE_super-role')" class="navbar-logon-group-menu">
                         <a href="/console/single-pages/editor" data-not-pjax target="_blank" th:aria-label="#{common.navbar.logon.new_single}"
                            th:title="#{common.navbar.logon.new_single}">
-                            <th:block th:if="${null != theme.config.basic_style.logon.console_single_pages_class}"
-                                      th:with="annoIcon = ${theme.config.basic_style.logon.console_single_pages_class},
-                                            iconContent = ${annoIcon != null and annoIcon instanceof T(java.util.Map) and #maps.containsKey(annoIcon, 'value') ? (annoIcon.value ?: '') : (annoIcon ?: '')},
-                                            iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
+                            <th:block th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_single_pages_class)}"
+                                      th:with="iconContent = ${#strings.defaultString(theme.config.basic_style.logon.console_single_pages_class, '')},
+                                         iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
                                 <i th:unless="${iconSvg}"
                                    th:classappend="${iconContent}"></i>
                                 <th:block th:if="${iconSvg}" th:utext="${iconContent}"></th:block>
@@ -180,10 +173,9 @@
                     </li>
                     <li sec:authorize="hasRole('ROLE_super-role')" class="navbar-logon-group-menu">
                         <a href="/console/moments" data-not-pjax target="_blank" th:aria-label="#{common.navbar.logon.moments}" th:title="#{common.navbar.logon.moments}">
-                            <th:block th:if="${null != theme.config.basic_style.logon.console_moment_class}"
-                                      th:with="annoIcon = ${theme.config.basic_style.logon.console_moment_class},
-                                            iconContent = ${annoIcon != null and annoIcon instanceof T(java.util.Map) and #maps.containsKey(annoIcon, 'value') ? (annoIcon.value ?: '') : (annoIcon ?: '')},
-                                            iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
+                            <th:block th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_moment_class)}"
+                                      th:with="iconContent = ${#strings.defaultString(theme.config.basic_style.logon.console_moment_class, '')},
+                                         iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
                                 <i th:unless="${iconSvg}"
                                    th:classappend="${iconContent}"></i>
                                 <th:block th:if="${iconSvg}" th:utext="${iconContent}"></th:block>
@@ -191,10 +183,9 @@
                     </li>
                     <li th:if="${!#strings.isEmpty(logonUserName)}" class="navbar-logon-group-menu">
                         <a href="/uc" data-not-pjax target="_blank" th:aria-label="#{common.navbar.logon.uc}" th:title="#{common.navbar.logon.uc}">
-                            <th:block th:if="${null != theme.config.basic_style.logon.console_person_class}"
-                                      th:with="annoIcon = ${theme.config.basic_style.logon.console_person_class},
-                                            iconContent = ${annoIcon != null and annoIcon instanceof T(java.util.Map) and #maps.containsKey(annoIcon, 'value') ? (annoIcon.value ?: '') : (annoIcon ?: '')},
-                                            iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
+                            <th:block th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_person_class)}"
+                                      th:with="iconContent = ${#strings.defaultString(theme.config.basic_style.logon.console_person_class, '')},
+                                         iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
                                 <i th:unless="${iconSvg}"
                                    th:classappend="${iconContent}"></i>
                                 <th:block th:if="${iconSvg}" th:utext="${iconContent}"></th:block>
@@ -202,10 +193,9 @@
                     </li>
                     <li sec:authorize="hasRole('ROLE_super-role')" class="navbar-logon-group-menu">
                         <a href="/console" data-not-pjax target="_blank" th:aria-label="#{common.navbar.logon.console}" th:title="#{common.navbar.logon.console}">
-                            <th:block th:if="${null != theme.config.basic_style.logon.console_manage_class}"
-                                      th:with="annoIcon = ${theme.config.basic_style.logon.console_manage_class},
-                                            iconContent = ${annoIcon != null and annoIcon instanceof T(java.util.Map) and #maps.containsKey(annoIcon, 'value') ? (annoIcon.value ?: '') : (annoIcon ?: '')},
-                                            iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
+                            <th:block th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_manage_class)}"
+                                      th:with="iconContent = ${#strings.defaultString(theme.config.basic_style.logon.console_manage_class, '')},
+                                         iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
                                 <i th:unless="${iconSvg}"
                                    th:classappend="${iconContent}"></i>
                                 <th:block th:if="${iconSvg}" th:utext="${iconContent}"></th:block>
@@ -215,10 +205,9 @@
                         <a href="/logout" data-not-pjax
                            onclick="this.href = '/logout?redirect_uri=' + encodeURIComponent(window.location.href)"
                            th:aria-label="#{common.navbar.logon.logout}" th:title="#{common.navbar.logon.logout}">
-                            <th:block th:if="${null != theme.config.basic_style.logon.console_logout_class}"
-                                      th:with="annoIcon = ${theme.config.basic_style.logon.console_logout_class},
-                                            iconContent = ${annoIcon != null and annoIcon instanceof T(java.util.Map) and #maps.containsKey(annoIcon, 'value') ? (annoIcon.value ?: '') : (annoIcon ?: '')},
-                                            iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
+                            <th:block th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_logout_class)}"
+                                      th:with="iconContent = ${#strings.defaultString(theme.config.basic_style.logon.console_logout_class, '')},
+                                         iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
                                 <i th:unless="${iconSvg}"
                                    th:classappend="${iconContent}"></i>
                                 <th:block th:if="${iconSvg}" th:utext="${iconContent}"></th:block>
@@ -228,10 +217,9 @@
                         <a href="/login" data-not-pjax
                            onclick="this.href = '/login?redirect_uri=' + encodeURIComponent(window.location.href)"
                            th:aria-label="#{common.navbar.logon.login}" th:title="#{common.navbar.logon.login}">
-                            <th:block th:if="${null != theme.config.basic_style.logon.console_login_class}"
-                                      th:with="annoIcon = ${theme.config.basic_style.logon.console_login_class},
-                                            iconContent = ${annoIcon != null and annoIcon instanceof T(java.util.Map) and #maps.containsKey(annoIcon, 'value') ? (annoIcon.value ?: '') : (annoIcon ?: '')},
-                                            iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
+                            <th:block th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_login_class)}"
+                                      th:with="iconContent = ${#strings.defaultString(theme.config.basic_style.logon.console_login_class, '')},
+                                         iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
                                 <i th:unless="${iconSvg}"
                                    th:classappend="${iconContent}"></i>
                                 <th:block th:if="${iconSvg}" th:utext="${iconContent}"></th:block>
@@ -359,9 +347,8 @@
                    th:target="${!#strings.isEmpty(logonUserName) ? theme.config.basic_style.console.console_logon_target : theme.config.basic_style.console.console_target}"
                    th:title="${theme.config.basic_style.console.console_title}"
                    th:aria-label="${theme.config.basic_style.console.console_title}">
-                    <th:block th:with="annoIcon = ${theme.config.basic_style.console.console_icon},
-                                            iconContent = ${annoIcon != null and annoIcon instanceof T(java.util.Map) and #maps.containsKey(annoIcon, 'value') ? (annoIcon.value ?: 'ri-equalizer-line') : (annoIcon ?: 'ri-equalizer-line')},
-                                            iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
+                    <th:block th:with="iconContent = ${#strings.defaultString(theme.config.basic_style.console.console_icon, 'ri-equalizer-line')},
+                                         iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
                         <i th:unless="${iconSvg}"
                            th:classappend="${iconContent}"></i>
                         <th:block th:if="${iconSvg}" th:utext="${iconContent}"></th:block>
@@ -385,10 +372,9 @@
                         <li sec:authorize="hasRole('ROLE_super-role')" class="navbar-logon-group-menu">
                             <a href="/console/posts/editor" data-not-pjax target="_blank" th:aria-label="#{common.navbar.logon.new_post}"
                                th:title="#{common.navbar.logon.new_post}">
-                                <th:block th:if="${null != theme.config.basic_style.logon.console_post_class}"
-                                          th:with="annoIcon = ${theme.config.basic_style.logon.console_post_class},
-                                            iconContent = ${annoIcon != null and annoIcon instanceof T(java.util.Map) and #maps.containsKey(annoIcon, 'value') ? (annoIcon.value ?: '') : (annoIcon ?: '')},
-                                            iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
+                                <th:block th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_post_class)}"
+                                          th:with="iconContent = ${#strings.defaultString(theme.config.basic_style.logon.console_post_class, '')},
+                                         iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
                                     <i th:unless="${iconSvg}"
                                        th:classappend="${iconContent}"></i>
                                     <th:block th:if="${iconSvg}" th:utext="${iconContent}"></th:block>
@@ -397,10 +383,9 @@
                         <li sec:authorize="hasRole('ROLE_super-role')" class="navbar-logon-group-menu">
                             <a href="/console/single-pages/editor" data-not-pjax target="_blank" th:aria-label="#{common.navbar.logon.new_single}"
                                th:title="#{common.navbar.logon.new_single}">
-                                <th:block th:if="${null != theme.config.basic_style.logon.console_single_pages_class}"
-                                          th:with="annoIcon = ${theme.config.basic_style.logon.console_single_pages_class},
-                                            iconContent = ${annoIcon != null and annoIcon instanceof T(java.util.Map) and #maps.containsKey(annoIcon, 'value') ? (annoIcon.value ?: '') : (annoIcon ?: '')},
-                                            iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
+                                <th:block th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_single_pages_class)}"
+                                          th:with="iconContent = ${#strings.defaultString(theme.config.basic_style.logon.console_single_pages_class, '')},
+                                         iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
                                     <i th:unless="${iconSvg}"
                                        th:classappend="${iconContent}"></i>
                                     <th:block th:if="${iconSvg}" th:utext="${iconContent}"></th:block>
@@ -409,10 +394,9 @@
                         <li sec:authorize="hasRole('ROLE_super-role')" class="navbar-logon-group-menu">
                             <a href="/console/moments" data-not-pjax target="_blank" th:aria-label="#{common.navbar.logon.moments}"
                                th:title="#{common.navbar.logon.moments}">
-                                <th:block th:if="${null != theme.config.basic_style.logon.console_moment_class}"
-                                          th:with="annoIcon = ${theme.config.basic_style.logon.console_moment_class},
-                                            iconContent = ${annoIcon != null and annoIcon instanceof T(java.util.Map) and #maps.containsKey(annoIcon, 'value') ? (annoIcon.value ?: '') : (annoIcon ?: '')},
-                                            iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
+                                <th:block th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_moment_class)}"
+                                          th:with="iconContent = ${#strings.defaultString(theme.config.basic_style.logon.console_moment_class, '')},
+                                         iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
                                     <i th:unless="${iconSvg}"
                                        th:classappend="${iconContent}"></i>
                                     <th:block th:if="${iconSvg}" th:utext="${iconContent}"></th:block>
@@ -421,10 +405,9 @@
                         <li th:if="${!#strings.isEmpty(logonUserName)}" class="navbar-logon-group-menu">
                             <a href="/uc" data-not-pjax target="_blank" th:aria-label="#{common.navbar.logon.uc}"
                                th:title="#{common.navbar.logon.uc}">
-                                <th:block th:if="${null != theme.config.basic_style.logon.console_person_class}"
-                                          th:with="annoIcon = ${theme.config.basic_style.logon.console_person_class},
-                                            iconContent = ${annoIcon != null and annoIcon instanceof T(java.util.Map) and #maps.containsKey(annoIcon, 'value') ? (annoIcon.value ?: '') : (annoIcon ?: '')},
-                                            iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
+                                <th:block th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_person_class)}"
+                                          th:with="iconContent = ${#strings.defaultString(theme.config.basic_style.logon.console_person_class, '')},
+                                         iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
                                     <i th:unless="${iconSvg}"
                                        th:classappend="${iconContent}"></i>
                                     <th:block th:if="${iconSvg}" th:utext="${iconContent}"></th:block>
@@ -433,10 +416,9 @@
                         <li sec:authorize="hasRole('ROLE_super-role')" class="navbar-logon-group-menu">
                             <a href="/console" data-not-pjax target="_blank" th:aria-label="#{common.navbar.logon.console}"
                                th:title="#{common.navbar.logon.console}">
-                                <th:block th:if="${null != theme.config.basic_style.logon.console_manage_class}"
-                                          th:with="annoIcon = ${theme.config.basic_style.logon.console_manage_class},
-                                            iconContent = ${annoIcon != null and annoIcon instanceof T(java.util.Map) and #maps.containsKey(annoIcon, 'value') ? (annoIcon.value ?: '') : (annoIcon ?: '')},
-                                            iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
+                                <th:block th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_manage_class)}"
+                                          th:with="iconContent = ${#strings.defaultString(theme.config.basic_style.logon.console_manage_class, '')},
+                                         iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
                                     <i th:unless="${iconSvg}"
                                        th:classappend="${iconContent}"></i>
                                     <th:block th:if="${iconSvg}" th:utext="${iconContent}"></th:block>
@@ -447,10 +429,9 @@
                                onclick="this.href = '/logout?redirect_uri=' + encodeURIComponent(window.location.href)"
                                th:aria-label="#{common.navbar.logon.logout}"
                                th:title="#{common.navbar.logon.logout}">
-                                <th:block th:if="${null != theme.config.basic_style.logon.console_logout_class}"
-                                          th:with="annoIcon = ${theme.config.basic_style.logon.console_logout_class},
-                                            iconContent = ${annoIcon != null and annoIcon instanceof T(java.util.Map) and #maps.containsKey(annoIcon, 'value') ? (annoIcon.value ?: '') : (annoIcon ?: '')},
-                                            iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
+                                <th:block th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_logout_class)}"
+                                          th:with="iconContent = ${#strings.defaultString(theme.config.basic_style.logon.console_logout_class, '')},
+                                         iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
                                     <i th:unless="${iconSvg}"
                                        th:classappend="${iconContent}"></i>
                                     <th:block th:if="${iconSvg}" th:utext="${iconContent}"></th:block>
@@ -461,10 +442,9 @@
                                onclick="this.href = '/login?redirect_uri=' + encodeURIComponent(window.location.href)"
                                th:aria-label="#{common.navbar.logon.login}"
                                th:title="#{common.navbar.logon.login}">
-                                <th:block th:if="${null != theme.config.basic_style.logon.console_login_class}"
-                                        th:with="annoIcon = ${theme.config.basic_style.logon.console_login_class},
-                                            iconContent = ${annoIcon != null and annoIcon instanceof T(java.util.Map) and #maps.containsKey(annoIcon, 'value') ? (annoIcon.value ?: '') : (annoIcon ?: '')},
-                                            iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
+                                <th:block th:if="${!#strings.isEmpty(theme.config.basic_style.logon.console_login_class)}"
+                                          th:with="iconContent = ${#strings.defaultString(theme.config.basic_style.logon.console_login_class, '')},
+                                         iconSvg = ${#strings.startsWith(iconContent, '<svg')}">
                                     <i th:unless="${iconSvg}"
                                        th:classappend="${iconContent}"></i>
                                     <th:block th:if="${iconSvg}" th:utext="${iconContent}"></th:block>
