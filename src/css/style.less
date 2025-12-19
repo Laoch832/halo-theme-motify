@@ -4449,6 +4449,8 @@ details[open] > summary::before {
       & > svg {
         font-size: 23px !important;
         color: var(--main);
+        height: 23px;
+        width: 23px;
       }
     }
 
@@ -4532,16 +4534,11 @@ details[open] > summary::before {
       & > a {
         font-size: inherit;
         color: var(--main);
-        gap: 5px;
         display: inline-flex;
         align-items: center;
         justify-content: left;
         line-height: 1;
 
-        i,
-        svg {
-          font-size: 16px;
-        }
       }
     }
 
@@ -5785,6 +5782,8 @@ text-diagram[data-type="mermaid"] {
       & > a {
         padding: 5px 0;
         color: var(--title);
+        transition: color .35s;
+        gap: 4px;
         font-size: 15px;
         width: 100%;
         display: flex;
@@ -5794,7 +5793,6 @@ text-diagram[data-type="mermaid"] {
         i, svg {
           color: var(--title);
           font-size: 1.2em;
-          margin-right: 4px;
         }
       }
     }
@@ -5823,8 +5821,12 @@ text-diagram[data-type="mermaid"] {
     .navbar-logon-group-menu:hover {
       background: var(--bg-a);
 
-      a, i {
+      a, i, svg {
         color: var(--theme);
+      }
+
+      i, svg {
+        animation: dung 0.3s 0.12s ease;
       }
     }
   }

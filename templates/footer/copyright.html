@@ -1,6 +1,6 @@
 <span xmlns:th="https://www.thymeleaf.org"
       th:fragment="footer (footer)"
-      id="webCopyright"
+      class="webCopyright"
       th:with="classStr = ${footer != null and not #lists.isEmpty(footer.show_style) ? #strings.trim(#strings.listJoin(footer.show_style,' ')) : ''}"
       th:classappend="${classStr}"
       th:text="'&copy; '+${#dates.format(#dates.createNow(), 'yyyy')}+' '">

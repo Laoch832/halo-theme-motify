@@ -1,6 +1,5 @@
 <span xmlns:th="https://www.thymeleaf.org"
-      id="websiteDate"
-      th:fragment="footer (footer)" class="record"
+      th:fragment="footer (footer)" class="record websiteDate"
       th:if="${!#strings.isEmpty(theme.config.basic_info.website_time)}"
       th:with="classStr = ${footer != null and not #lists.isEmpty(footer.show_style) ? #strings.trim(#strings.listJoin(footer.show_style,' ')) : ''},
                html='&lt;span class=&quot;stand&quot;&gt;0&lt;/span&gt;'"
