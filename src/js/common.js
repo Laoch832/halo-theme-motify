@@ -500,8 +500,8 @@ const commonContext = {
     if (!DreamConfig.website_time || !DreamConfig.site_time_expression) {
       return
     }
-    const websiteDate = document.getElementById('websiteDate')
-    if (DreamConfig.website_time === '' || !websiteDate) {
+    const websiteDate = document.querySelectorAll('.websiteDate')
+    if (DreamConfig.website_time === '' || !websiteDate || websiteDate.length === 0) {
       return
     }
     const grt = new Date(DreamConfig.website_time).getTime()
@@ -526,11 +526,14 @@ const commonContext = {
       }
       let days = parseInt(difference / 24)
       //使用时间表达式显示，适配多语言
-      websiteDate.innerHTML = DreamConfig.site_time_expression
+      let timeText = DreamConfig.site_time_expression
         .replace(/\{(\d+)\}/g, (match, p1) => {
           const values = [days, hours, minutes, seconds]
           return `<span class="stand">${values[p1]}</span>`
         })
+      websiteDate.forEach(element => {
+        element.innerHTML = timeText
+      })
     }, 300)
   },
   /* 显示web版权 */
@@ -538,20 +541,23 @@ const commonContext = {
     if (!DreamConfig.website_time) {
       return
     }
-    const webCopyright = document.getElementById('webCopyright')
-    if (!webCopyright) {
+    const webCopyrightElements = document.querySelectorAll('.webCopyright')
+    if (!webCopyrightElements || webCopyrightElements.length === 0) {
       return
     }
     const now = new Date()
     let nowYear = now.getFullYear()
     const grt = new Date(DreamConfig.website_time)
     let getYear = grt.getFullYear()
+    let yearText
     if (nowYear === getYear) {
-      webCopyright.innerText = '© ' + nowYear
-      return
+      yearText = '© ' + nowYear
+    } else {
+      yearText = '© ' + getYear + '-' + nowYear
     }
-
-    webCopyright.innerText = '© ' + getYear + '-' + nowYear
+    webCopyrightElements.forEach(element => {
+      element.innerText = yearText
+    })
   },
   /* 激活侧边栏人生倒计时 */
   initTimeCount() {

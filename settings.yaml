@@ -125,7 +125,7 @@ spec:
                   help: '重复添加标记“唯一”的模块将导致渲染失败，请留意。'
                   options:
                     - value: 'copyright'
-                      label: 站点版权 (唯一)
+                      label: 站点版权
                     - value: 'site_name'
                       label: 站点名称
                     - value: 'theme_copyright'
@@ -135,7 +135,7 @@ spec:
                     - value: 'security'
                       label: 公安备案
                     - value: 'site_time'
-                      label: 建站时间 (唯一)
+                      label: 建站时间
                     - value: 'busuanzi'
                       label: 卜蒜子访客统计 (唯一)
                     - value: 'cloud'
