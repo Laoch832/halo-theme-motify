@@ -5785,6 +5785,7 @@ text-diagram[data-type="mermaid"] {
       & > a {
         padding: 5px 0;
         color: var(--title);
+        transition: color .35s;
         font-size: 15px;
         width: 100%;
         display: flex;
@@ -5823,8 +5824,12 @@ text-diagram[data-type="mermaid"] {
     .navbar-logon-group-menu:hover {
       background: var(--bg-a);
 
-      a, i {
+      a, i, svg {
         color: var(--theme);
+      }
+
+      i, svg {
+        animation: dung 0.3s 0.12s ease;
       }
     }
   }
