@@ -1522,6 +1522,13 @@ spec:
               language: html
               height: 45px
               help: '填写页面内容，填写<html>、<head>和<body>标签内容。'
+        - $formkit: switch
+          onValue: true
+          offValue: false
+          name: mobile_special_effects
+          label: 移动端特效显示
+          value: false
+          help: '开启后移动端也可显示特效，具体效果取决于当前启用的特效模式。'
         - $formkit: select
           name: effects_lantern_mode
           id: effects_lantern_mode
