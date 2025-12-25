@@ -230,26 +230,20 @@ spec:
               value: 'strict-origin-when-cross-origin'
             - label: 总是发送完整URL(即使HTTPS→HTTP)
               value: 'unsafe-url'
-        - $formkit: select
+        - $formkit: switch
           name: lazy_enable
+          onValue: true
+          offValue: false
           label: 懒加载
           value: false
           help: 对文章列表图片、归档页图片和文章图片启用懒加载，pjax加载的页面无效。
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
-        - $formkit: select
+        - $formkit: switch
           name: header_fixed
           label: 固定标题栏
+          onValue: true
+          offValue: false
           value: false
           help: 固定标题栏时不会随着页面滚动而隐藏，始终显示标题栏。
-          options:
-            - label: 默认
-              value: false
-            - label: 固定
-              value: true
         - $formkit: select
           name: menu_center
           label: 菜单栏对齐方式
@@ -286,16 +280,13 @@ spec:
               value: 'console'
             - label: 不显示
               value: 'false'
-        - $formkit: select
+        - $formkit: switch
+          onValue: true
+          offValue: false
           name: show_mobile_console
           label: 移动端显示控制台按钮
           help: 控制移动端“控制台按钮”的显隐状态，该按钮在移动端显示于抽屉式导航菜单内。
           value: false
-          options:
-            - label: 显示
-              value: true
-            - label: 不显示
-              value: false
         - $formkit: group
           name: logon
           label: 登录组件样式
@@ -410,7 +401,7 @@ spec:
               label: 左侧展开
             - value: center
               label: 居中展开
-        - $formkit: select
+        - $formkit: switch
           name: drawer_toc
           label: 侧边抽屉式目录
           value: true
@@ -420,16 +411,13 @@ spec:
               label: 显示
             - value: false
               label: 不显示
-        - $formkit: select
+        - $formkit: switch
+          onValue: true
+          offValue: false
           name: enable_image_bg
           label: 开启博客背景图
           value: false
           help: '如果某个选项的背景图链接未指定，则不开启那个选项的背景图。'
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
         - $formkit: attachment
           name: background_pc
           aspectRatio: 16/9
@@ -502,15 +490,12 @@ spec:
               value: true
             - label: 默认
               value: false
-        - $formkit: select
+        - $formkit: switch
+          onValue: true
+          offValue: false
           name: banner_hide_mask
           label: 隐藏横幅遮罩
           value: false
-          options:
-            - label: 显示
-              value: false
-            - label: 隐藏
-              value: true
           help: '隐藏后横幅显示会更亮'
         - $formkit: select
           name: theme_style
@@ -716,16 +701,13 @@ spec:
               label: 阅读时间
             - value: 'edit'
               label: 编辑
-        - $formkit: select
+        - $formkit: switch
+          onValue: true
+          offValue: false
           name: show_ai_summary
           label: 文章摘要显示“AI 总结”
           value: false
           help: '当启用“AI 助手-文章自动总结”功能时，是否将“AI 助手-文章自动总结”结果显示在摘要位置（与其他摘要功能互斥）。'
-          options:
-            - value: true
-              label: 是
-            - value: false
-              label: 否
         - $formkit: number
           name: code_fold_line
           label: 代码块折叠
@@ -736,41 +718,32 @@ spec:
           label: 正文长图折叠
           placeholder: '请输入高度数值（px）'
           help: '图片高度超出指定高度（px）后默认进行折叠，指定的高度需大于等于 400px。'
-        - $formkit: select
+        - $formkit: switch
+          onValue: true
+          offValue: false
           name: show_img_name
           label: 显示图片名称
           value: false
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
         - $formkit: number
           name: invalid_tips_day
           label: 文章失效提示
           value: 99999999
           placeholder: '请输入时间（天）'
           help: '文章超过指定天数未进行更新，展示文章或图片可能失效的温馨提示。'
-        - $formkit: select
+        - $formkit: switch
+          onValue: true
+          offValue: false
           name: enable_copyright
           label: 开启文章版权声明
           value: true
           help: '如果文章或页面元数据配置了“开启文章版权声明”项，则当前配置将被覆盖。'
-          options:
-            - value: true
-              label: 默认开启
-            - value: false
-              label: 默认关闭
-        - $formkit: select
+        - $formkit: switch
+          onValue: true
+          offValue: false
           name: enable_post_share
           label: 开启文章分享
           value: true
           help: '如果文章或页面元数据配置了“开启文章分享”项，则当前配置将被覆盖。'
-          options:
-            - value: true
-              label: 默认开启
-            - value: false
-              label: 默认关闭
         - $formkit: select
           name: custom_post_share
           label: 文章分享方式
@@ -815,16 +788,13 @@ spec:
               label: 复制链接
             - value: 'poster'
               label: 海报
-        - $formkit: select
+        - $formkit: switch
+          onValue: true
+          offValue: false
           name: enable_post_donate
           label: 开启文章打赏
           value: true
           help: '如果文章或页面元数据配置了“开启文章打赏”项，则当前配置将被覆盖。'
-          options:
-            - value: true
-              label: 默认开启
-            - value: false
-              label: 默认关闭
         - $formkit: select
           name: post_donate_style
           label: 文章打赏样式
@@ -956,33 +926,24 @@ spec:
               label: 侧边栏内容
               placeholder: 请输入 HTML 内容
               help: '非必填，仅在侧边栏类型为公告、广告、自定义时生效。'
-            - $formkit: select
+            - $formkit: switch
+              onValue: true
+              offValue: false
               name: show_ad_tag
               if: $value.type === 'ad_piece'
               label: 侧边栏广告-显示“广告”标签
-              options:
-                - value: true
-                  label: 显示
-                - value: false
-                  label: 不显示
-            - $formkit: select
+            - $formkit: switch
+              onValue: true
+              offValue: false
               name: ad_tag_close
               if: $value.type === 'ad_piece'
               label: 侧边栏广告-点击“广告”标签可关闭广告
-              options:
-                - value: true
-                  label: 是
-                - value: false
-                  label: 否
-        - $formkit: select
+        - $formkit: switch
+          onValue: true
+          offValue: false
           name: enable_color_character
           label: 侧边栏信息-开启彩字切换
           value: false
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
         - $formkit: textarea
           name: color_character
           label: 侧边栏信息-彩字内容
@@ -1149,7 +1110,7 @@ spec:
             - value: 'playlist'
               label: '网易云歌单 ID'
             - value: 'config'
-              label: 参数进阶配置
+              label: '参数进阶配置'
         - $formkit: text
           name: netease_playlist_id
           label: '侧边栏音乐-网易云歌单 ID'
@@ -1170,16 +1131,13 @@ spec:
           label: 侧边栏最近文章-展示文章数量
           placeholder: 请输入数量数值
           value: 5
-        - $formkit: select
+        - $formkit: switch
+          onValue: true
+          offValue: false
           name: recent_posts_more
           label: 侧边栏最近文章-显示”更多”按钮
           value: true
           help: '侧边栏最近文章是否显示更多按钮。更多按钮跳转至文章归档页面。'
-          options:
-            - value: true
-              label: 显示
-            - value: false
-              label: 不显示
         - $formkit: select
           name: recent_posts_pinned
           label: 侧边栏最近文章-显示模式
@@ -1201,16 +1159,13 @@ spec:
           name: providerMirror
           value: "https://cravatar.cn/avatar/{hash}"
           validation: required
-        - $formkit: select
+        - $formkit: switch
+          onValue: true
+          offValue: false
           name: categories_more
           label: 侧边栏分类-显示”更多”按钮
           value: true
           help: '侧边栏分类是否显示更多按钮。'
-          options:
-            - value: true
-              label: 显示
-            - value: false
-              label: 不显示
         - $formkit: list
           name: categories_names
           label: 侧边栏分类-展示的分类
@@ -1221,54 +1176,42 @@ spec:
             - $formkit: categorySelect
               index: "$index"
               validation: required
-        - $formkit: select
+        - $formkit: switch
+          onValue: true
+          offValue: false
           name: tags_more
           label: 侧边栏标签-显示”更多”按钮
           value: true
           help: '侧边栏标签是否显示更多按钮。'
-          options:
-            - value: true
-              label: 显示
-            - value: false
-              label: 不显示
         - $formkit: number
           name: tags_num
           label: 侧边栏标签-展示标签数量
           placeholder: 请输入数量数值
           value: 18
-        - $formkit: select
+        - $formkit: switch
+          onValue: true
+          offValue: false
           name: enable_tag_color
           label: 侧边栏标签-开启标签颜色
           value: false
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
-        - $formkit: select
+        - $formkit: switch
+          onValue: true
+          offValue: false
           name: tagcloud_more
           label: 侧边栏标签云-显示”更多”按钮
           value: true
           help: '侧边栏标签云是否显示更多按钮。'
-          options:
-            - value: true
-              label: 显示
-            - value: false
-              label: 不显示
         - $formkit: number
           name: tagcloud_num
           label: 侧边栏标签云-展示标签数量
           placeholder: 请输入数量数值
           value: 32
-        - $formkit: select
+        - $formkit: switch
+          onValue: true
+          offValue: false
           name: enable_tagcloud_color
           label: 侧边栏标签云-开启标签颜色
           value: false
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
         - $formkit: select
           name: show_tagcloud_style
           label: 侧边栏标签云-标签云显示风格
@@ -1298,15 +1241,12 @@ spec:
           label: '友链页面-默认 Logo'
           placeholder: '请输入/选择 Logo 路径'
           help: "在加载用户 Logo 时、友链未设置 Logo 时、友链 Logo 加载失败时显示。"
-        - $formkit: select
+        - $formkit: switch
+          onValue: true
+          offValue: false
           name: show_exchange_info
           label: 友链页面-显示友链交换信息
           value: true
-          options:
-            - value: true
-              label: 显示
-            - value: false
-              label: 关闭
         - $formkit: attachment
           name: links_blogger_avatar
           aspectRatio: 1/1
@@ -1352,56 +1292,41 @@ spec:
           validation: required
           placeholder: '请选择一个页面作为友链页面的评论区ID'
           help: '指定一个“自定义页面”用于友链页面的评论区ID，被指定的页面评论区将作为友链的评论区。'
-        - $formkit: select
+        - $formkit: switch
+          onValue: true
+          offValue: false
           name: enable_tags_tag_color
           label: 标签页面-开启标签颜色
           value: false
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
-        - $formkit: select
+        - $formkit: switch
+          onValue: true
+          offValue: false
           name: enable_journals_tags
           label: 瞬间页面-开启标签栏
           value: true
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
         - $formkit: number
           name: journals_fold_height
           label: 瞬间页面-动态内容折叠
           placeholder: '请输入高度数值（px）'
           help: '动态内容高度超出指定高度后默认进行折叠，指定的高度需大于等于 260px。'
-        - $formkit: select
+        - $formkit: switch
+          onValue: true
+          offValue: false
           name: enable_journals_comment
           label: 瞬间页面-开启评论区
           value: true
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
-        - $formkit: select
+        - $formkit: switch
+          onValue: true
+          offValue: false
           name: enable_journals_share
           label: 瞬间页面-开启瞬间分享
           value: true
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
-        - $formkit: select
+        - $formkit: switch
+          onValue: true
+          offValue: false
           name: enable_journals_owner
           label: 瞬间页面-开启作者显示
           value: false
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
         - $formkit: attachment
           name: journals_share_image
           aspectRatio: 16/9
@@ -1559,16 +1484,13 @@ spec:
             https://unpkg.com
             https://cdn.onmicrosoft.cn
             https://npm.elemecdn.com
-        - $formkit: select
+        - $formkit: switch
+          onValue: true
+          offValue: false
           name: enable_pjax
           label: Pjax 加载
           value: false
           help: '使用Pjax加载可极大提升页面跳转的速度，但可能和部分插件不兼容。'
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
         - $formkit: group
           name: error
           label: 错误页面
@@ -1795,40 +1717,31 @@ spec:
               validation: required
               value: ""
               placeholder: '请输入自建 busuanzi 服务js地址'
-        - $formkit: select
+        - $formkit: switch
+          onValue: true
+          offValue: false
           name: disable_debug
           label: 禁止打开控制台
           value: false
           help: '开启后，禁止通过快捷键打开控制台，其他方式打开时禁止调试操作。'
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
-        - $formkit: select
+        - $formkit: switch
+          onValue: true
+          offValue: false
           name: enable_debug
           label: 开启 DEBUG 日志
           value: false
           help: '开发和问题排查时开启日志。'
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
     - group: security_link_config
       label: '安全链接'
       formSchema:
-        - $formkit: select
+        - $formkit: switch
+          onValue: true
+          offValue: false
           name: enable_security_link
           id: enable_security_link
           label: 开启 安全链接页面
           value: false
           help: '开启安全链接页面前，请先使用“安全链接页面模版”创建页面。'
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
         - $formkit: singlePageSelect
           name: security_link_single_page
           validation: required
@@ -1940,17 +1853,14 @@ spec:
     - group: pwa
       label: 'PWA配置'
       formSchema:
-        - $formkit: select
+        - $formkit: switch
+          onValue: true
+          offValue: false
           name: enable_pwa
           id: enable_pwa
           label: 开启 PWA 配置
           value: false
           help: '开启 PWA，配置说明详见主题文档。'
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
         - $formkit: attachmentInput
           name: manifest_file
           if: $get(enable_pwa).value
