@@ -98,8 +98,12 @@ const commonContext = {
       const srcset = $img.attr('srcset')
 
       if (DreamConfig.lazy_enable) {
-        $img.attr('data-src', src)
-        $img.attr('data-srcset', srcset)
+        if (src) {
+          $img.attr('data-src', src)
+        }
+        if (srcset) {
+          $img.attr('data-srcset', srcset)
+        }
         $img.addClass('lazyload')
       }
 
@@ -805,7 +809,7 @@ window.commonContext = commonContext
 let timeLifeHour = -1
 
 !(function () {
-  const loads = ['initCarousel', 'sparkInput', 'websiteTime', 'playBannerVideo']
+  const loads = ['initCarousel', 'sparkInput', 'websiteTime', 'playBannerVideo', 'initGallery']
   const omits = ['initEffects', 'showThemeVersion', 'iniTaskItemDisabled']
 
   Object.keys(commonContext).forEach(
