@@ -43,7 +43,7 @@ jobs:
       - name: Push master to Gitee
         run: |
           echo "Pushing master branch to Gitee..."
-          git push ${{ env.GITEE_REPO }} master:master --force
+          git push ${{ env.GITEE_REPO }} master:master --force --no-verify
           echo "✅ Master branch pushed to Gitee"
 
       - name: Push master to Gitea
