@@ -4473,11 +4473,20 @@ details[open] > summary::before {
     }
 
     .navbar-logon-group {
-      left: -100% !important;
+      left: auto !important;
+      right: 0 !important;
       top: 46px !important;
+      transform: translateX(0) perspective(600px) rotateX(-45deg);
 
       &::before {
-        left: 82.5% !important;
+        left: auto;
+        right: 0;
+      }
+    }
+
+    .navbar-logon.active {
+      .navbar-logon-group {
+        transform: translateX(0) perspective(600px) rotateX(0) !important;
       }
     }
   }
