@@ -335,6 +335,7 @@
           effects && DreamConfig.effects_universe_mode && Utils.cachedScript(`${DreamConfig.theme_base}/js/effects/universe.min.js?mew=${DreamConfig.theme_version}`)
           effects && DreamConfig.effects_circle_magic_mode && Utils.cachedScript(`${DreamConfig.theme_base}/js/effects/circleMagic.min.js?mew=${DreamConfig.theme_version}`)
           effects && DreamConfig.effects_quantum_silk_thread_mode && Utils.cachedScript(`${DreamConfig.theme_base}/js/effects/quantum.min.js?mew=${DreamConfig.theme_version}`)
+          effects && DreamConfig.effects_rain_mode && Utils.cachedScript(`${DreamConfig.theme_base}/js/effects/rain.min.js?mew=${DreamConfig.theme_version}`)
         }
 
         //处理跳转链接，若链接不合法则跳转到首页
@@ -370,7 +371,9 @@
             if (countdown <= 0) {
               countdownTextElement.textContent = '[[#{page.security_link.countdown_tip_jump}]]'
               clearInterval(timer)
-              window.location.replace(targetUrl);
+              setTimeout(function() {
+                window.location.replace(targetUrl);
+              }, 30);
             }
           }, 1000)
         } else {
@@ -383,7 +386,9 @@
           if (timer) {
             clearInterval(timer)
           }
-          window.location.replace(targetUrl)
+          setTimeout(function() {
+            window.location.replace(targetUrl);
+          }, 30);
           if (countdownElement) {
             countdownElement.textContent = 0
           }
