@@ -716,6 +716,7 @@ const commonContext = {
     DreamConfig.effects_universe_mode && Utils.cachedScript(`${DreamConfig.theme_base}/js/effects/universe.min.js?mew=${DreamConfig.theme_version}`)
     DreamConfig.effects_circle_magic_mode && Utils.cachedScript(`${DreamConfig.theme_base}/js/effects/circleMagic.min.js?mew=${DreamConfig.theme_version}`)
     DreamConfig.effects_quantum_silk_thread_mode && Utils.cachedScript(`${DreamConfig.theme_base}/js/effects/quantum.min.js?mew=${DreamConfig.theme_version}`)
+    DreamConfig.effects_rain_mode && Utils.cachedScript(`${DreamConfig.theme_base}/js/effects/rain.min.js?mew=${DreamConfig.theme_version}`)
   },
   /* 显示主题版本信息 */
   showThemeVersion() {
