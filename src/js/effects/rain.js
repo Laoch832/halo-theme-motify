@@ -131,7 +131,6 @@ const RainEffect = (function () {
 
       createStyles()
       container = createContainer()
-      startRaining()
       animate()
       setupResizeHandler()
     },
