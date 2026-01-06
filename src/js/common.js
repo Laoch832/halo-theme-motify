@@ -709,7 +709,6 @@ const commonContext = {
     if (Utils.isMobile() && !DreamConfig.mobile_special_effects) return
     DreamConfig.cursor_move && Utils.cachedScript(`${DreamConfig.theme_base}/js/cursor/move/${DreamConfig.cursor_move}.min.js?mew=${DreamConfig.theme_version}`)
     DreamConfig.cursor_click && Utils.cachedScript(`${DreamConfig.theme_base}/js/cursor/click/${DreamConfig.cursor_click}.min.js?mew=${DreamConfig.theme_version}`)
-    DreamConfig.enable_live2d && Utils.cachedScript(`${DreamConfig.theme_base}/js/autoload.min.js?mew=${DreamConfig.theme_version}`)
     DreamConfig.effects_lantern_mode && Utils.cachedScript(`${DreamConfig.theme_base}/js/effects/lantern.min.js?mew=${DreamConfig.theme_version}`)
     DreamConfig.effects_sakura_mode && Utils.cachedScript(`${DreamConfig.theme_base}/js/effects/sakura.min.js?mew=${DreamConfig.theme_version}`)
     DreamConfig.effects_snowflake_mode && Utils.cachedScript(`${DreamConfig.theme_base}/js/effects/snowflake.min.js?mew=${DreamConfig.theme_version}`)
@@ -810,8 +809,8 @@ window.commonContext = commonContext
 let timeLifeHour = -1
 
 !(function () {
-  const loads = ['initCarousel', 'sparkInput', 'websiteTime', 'playBannerVideo']
-  const omits = ['initEffects', 'showThemeVersion', 'iniTaskItemDisabled']
+  const loads = ['initCarousel', 'sparkInput', 'websiteTime', 'playBannerVideo', 'initEffects', 'iniTaskItemDisabled']
+  const omits = ['showThemeVersion']
 
   Object.keys(commonContext).forEach(
     (c) => !loads.includes(c) && !omits.includes(c) && commonContext[c]()
