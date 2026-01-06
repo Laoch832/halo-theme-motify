@@ -9,7 +9,7 @@ const RainEffect = (function () {
   const config = {
     density: 5,     // 雨滴密度
     speed: 0.5,      // 下落速度
-    frameDuration: 1000 / 33   // 帧间隔 ms
+    frameDuration: 1000 / 20   // 帧间隔 ms
   }
 
   let container = null
@@ -159,7 +159,7 @@ const RainEffect = (function () {
 })()
 
 RainEffect.init({
-  density: Utils.isMobile() ? 2 : 2,  // 雨滴密度
-  speed: 0.4    // 下落速度
+  density: Utils.isMobile() ? 1 : 2,  // 雨滴密度
+  speed: 0.5    // 下落速度
 })
 
