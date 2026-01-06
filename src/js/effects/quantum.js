@@ -31,48 +31,45 @@
   function animate() {
     context.clearRect(0, 0, canvas.width, canvas.height)
 
-    var particleA, particleB, distance, dx, dy, alpha, lineWidth
+    // 模式检查
+    const mode = DreamConfig.effects_quantum_silk_thread_mode
+    const isNight = document.documentElement.classList.contains('night')
+    if (mode === 'all' || (mode === 'day' && !isNight) || (mode === 'night' && isNight)) {
+      var particleA, particleB, distance, dx, dy, alpha, lineWidth
 
-    particles.forEach(function (currentParticle, index) {
-      currentParticle.x += currentParticle.vx
-      currentParticle.y += currentParticle.vy
-      currentParticle.vx *= currentParticle.x > canvas.width || currentParticle.x < 0 ? -1 : 1
-      currentParticle.vy *= currentParticle.y > canvas.height || currentParticle.y < 0 ? -1 : 1
-      context.fillRect(currentParticle.x - 0.5, currentParticle.y - 0.5, 1, 1)
+      particles.forEach(function (currentParticle, index) {
+        currentParticle.x += currentParticle.vx
+        currentParticle.y += currentParticle.vy
+        currentParticle.vx *= currentParticle.x > canvas.width || currentParticle.x < 0 ? -1 : 1
+        currentParticle.vy *= currentParticle.y > canvas.height || currentParticle.y < 0 ? -1 : 1
+        context.fillRect(currentParticle.x - 0.5, currentParticle.y - 0.5, 1, 1)
 
-      for (var j = index + 1; j < allParticles.length; j++) {
-        particleB = allParticles[j]
-        if (particleB.x !== null && particleB.y !== null) {
-          dx = currentParticle.x - particleB.x
-          dy = currentParticle.y - particleB.y
-          distance = dx * dx + dy * dy
+        for (var j = index + 1; j < allParticles.length; j++) {
+          particleB = allParticles[j]
+          if (particleB.x !== null && particleB.y !== null) {
+            dx = currentParticle.x - particleB.x
+            dy = currentParticle.y - particleB.y
+            distance = dx * dx + dy * dy
 
-          if (distance < particleB.maxDistance) {
-            if (particleB === mouseParticle && distance >= particleB.maxDistance / 2) {
-              currentParticle.x -= 0.03 * dx
-              currentParticle.y -= 0.03 * dy
+            if (distance < particleB.maxDistance) {
+              if (particleB === mouseParticle && distance >= particleB.maxDistance / 2) {
+                currentParticle.x -= 0.03 * dx
+                currentParticle.y -= 0.03 * dy
+              }
+
+              alpha = (particleB.maxDistance - distance) / particleB.maxDistance
+              context.beginPath()
+              context.lineWidth = alpha / 2
+              context.strokeStyle = getDynamicColor(alpha)
+              context.moveTo(currentParticle.x, currentParticle.y)
+              context.lineTo(particleB.x, particleB.y)
+              context.stroke()
             }
-
-            alpha = (particleB.maxDistance - distance) / particleB.maxDistance
-            context.beginPath()
-            context.lineWidth = alpha / 2
-            context.strokeStyle = getDynamicColor(alpha)
-            context.moveTo(currentParticle.x, currentParticle.y)
-            context.lineTo(particleB.x, particleB.y)
-            context.stroke()
           }
         }
-      }
-    })
-
+      })
+    }
     requestAnimationFrame(animate)
-  }
-
-  // 模式检查
-  const mode = DreamConfig.effects_quantum_silk_thread_mode
-  const isNight = document.documentElement.classList.contains('night')
-  if (mode !== 'all' && (mode !== 'day' || isNight) && (mode !== 'night' || !isNight)) {
-    return
   }
 
   // 全局变量
