@@ -1474,6 +1474,12 @@ spec:
                   label: 无动画
                 - value: 'scale'
                   label: 缩放动画
+                - value: 'multi-cube'
+                  label: 旋转多维方块动画
+                - value: 'wave-pulse'
+                  label: 波浪脉冲动画
+                - value: 'orbit-system'
+                  label: 轨道行星系统动画
         - $formkit: group
           name: error
           label: 错误页面

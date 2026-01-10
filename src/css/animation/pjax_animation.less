@@ -1,0 +1,178 @@
+.pjax-animation-container {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-f);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+  transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.15s;
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+  }
+
+  /* 旋转多维方块 */
+  .multi-cube {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: cubeRotate 8s linear infinite;
+
+    .cube-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: rgba(52, 152, 219, 0.7);
+      border: 2px solid white;
+      border-radius: 8px;
+
+      &.front { transform: translateZ(30px); }
+      &.back { transform: translateZ(-30px) rotateY(180deg); }
+      &.right { transform: translateX(30px) rotateY(90deg); background: rgba(46, 204, 113, 0.7); }
+      &.left { transform: translateX(-30px) rotateY(-90deg); background: rgba(231, 76, 60, 0.7); }
+      &.top { transform: translateY(-30px) rotateX(90deg); background: rgba(155, 89, 182, 0.7); }
+      &.bottom { transform: translateY(30px) rotateX(-90deg); background: rgba(241, 196, 15, 0.7); }
+    }
+
+    @keyframes cubeRotate {
+      0% { transform: rotateX(0) rotateY(0) rotateZ(0); }
+      100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+    }
+  }
+
+  /* 波浪脉冲动画 */
+  .wave-pulse {
+    position: relative;
+    width: 80px;
+    height: 80px;
+
+    .wave-circle {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 3px solid;
+      opacity: 0;
+
+      &.wave-1 {
+        border-color: #3498db;
+        animation: wavePulse 2s infinite;
+      }
+      &.wave-2 {
+        border-color: #2ecc71;
+        animation: wavePulse 2s infinite 0.5s;
+      }
+      &.wave-3 {
+        border-color: #e74c3c;
+        animation: wavePulse 2s infinite 1s;
+      }
+    }
+
+    .wave-center {
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    @keyframes wavePulse {
+      0% {
+        transform: scale(0.5);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+  }
+
+  /* 轨道行星系统 */
+  .orbit-system {
+    width: 100px;
+    height: 100px;
+    position: relative;
+
+    .orbit {
+      position: absolute;
+      border: 2px solid rgba(52, 152, 219, 0.2);
+      border-radius: 50%;
+
+      &.orbit-1 { width: 100%; height: 100%; }
+      &.orbit-2 { width: 70%; height: 70%; top: 15%; left: 15%; }
+      &.orbit-3 { width: 40%; height: 40%; top: 30%; left: 30%; }
+    }
+
+    .planet {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      top: 50%;
+      left: 0;
+      transform: translate(-50%, -50%);
+
+      &.planet-1 {
+        background: #3498db;
+        animation: orbit1 3s linear infinite;
+      }
+
+      &.planet-2 {
+        background: #2ecc71;
+        animation: orbit2 2s linear infinite;
+      }
+
+      &.planet-3 {
+        background: #e74c3c;
+        animation: orbit3 1.5s linear infinite;
+      }
+
+    }
+
+    .sun {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(45deg, #f1c40f, #e67e22);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: sunGlow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes orbit1 {
+      0% { transform: translate(-50%, -50%) rotate(0deg) translateX(50px) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg) translateX(50px) rotate(-360deg); }
+    }
+
+    @keyframes orbit2 {
+      0% { transform: translate(-50%, -50%) rotate(0deg) translateX(35px) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg) translateX(35px) rotate(-360deg); }
+    }
+
+    @keyframes orbit3 {
+      0% { transform: translate(-50%, -50%) rotate(0deg) translateX(20px) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg) translateX(20px) rotate(-360deg); }
+    }
+
+    @keyframes sunGlow {
+      0% { box-shadow: 0 0 10px #f1c40f; }
+      100% { box-shadow: 0 0 20px #e67e22, 0 0 30px #e67e22; }
+    }
+  }
+}
