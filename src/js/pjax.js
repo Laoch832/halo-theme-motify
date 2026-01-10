@@ -81,13 +81,14 @@ $(document).on('pjax:beforeSend', function (event, xhr, options) {
   } else if (pjaxAnimationValidStyles.includes(DreamConfig.pjax_animation_style)) {
     $('.pjax-animation-container').addClass('active')
   }
+  window.DProgress && DProgress.start()
+  $('.pjax-close').remove()
   document.dispatchEvent(new Event('pjax:beforeSend', {bubbles: true}))
 })
 
 $(document).on('pjax:start', function (event, xhr, options) {
   if (!options || !options.serialNumber) return
   console.log(`pjax:start sn = ${options.serialNumber}`)
-  window.DProgress && DProgress.start()
   $('.pjax-close').remove()
   document.dispatchEvent(new Event('pjax:start', {bubbles: true}))
 })
@@ -136,12 +137,6 @@ $(document).on('pjax:success', async function (event, data, status, xhr, options
   commonContext.initTocAndNotice()
   /* 初始化pjax加载 */
   initPjax()
-  /* 已经完成页面渲染 */
-  if (DreamConfig.pjax_animation_style === 'scale') {
-    $('html').removeClass('pjax-loading')
-  } else if (pjaxAnimationValidStyles.includes(DreamConfig.pjax_animation_style)) {
-    $('.pjax-animation-container').removeClass('active')
-  }
 
   const $currentTarget = $($.parseHTML(data, document, true))
   const $head = $('head')
@@ -278,14 +273,14 @@ $(document).on('pjax:end', function (event, xhr, options) {
     commonContext.closeFancybox()
     window.DProgress && DProgress.done()
     // 应该是由于浏览器缓存失效，有时候浏览器前后退还是会执行pjax:beforeSend
-    //动画模式
-    if (DreamConfig.pjax_animation_style === 'scale') {
-      $('html').removeClass('pjax-loading')
-    } else if (pjaxAnimationValidStyles.includes(DreamConfig.pjax_animation_style)) {
-      $('.pjax-animation-container').removeClass('active')
-    }
   }
   document.dispatchEvent(new Event('pjax:end', {bubbles: true}))
+  //动画模式
+  if (DreamConfig.pjax_animation_style === 'scale') {
+    $('html').removeClass('pjax-loading')
+  } else if (pjaxAnimationValidStyles.includes(DreamConfig.pjax_animation_style)) {
+    $('.pjax-animation-container').removeClass('active')
+  }
 })
 
 $(document).on('pjax:popstate', function (event) {
