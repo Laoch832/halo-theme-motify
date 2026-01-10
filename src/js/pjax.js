@@ -1,6 +1,8 @@
 const cssLoadCompletes = new Set($('link[href*=".css"]').map((i, item) => $(item).attr('href')).get())
 const jsLoadCompletes = new Set($('script[src*=".js"]').map((i, item) => $(item).attr('src')).get())
 
+const pjaxAnimationValidStyles = ['multi-cube', 'wave-pulse', 'orbit-system']
+
 // 为pjax请求创建一个序列号
 const createSerialNumber = () => {
   const serialNumber = new Date().getTime()
@@ -76,6 +78,8 @@ $(document).on('pjax:beforeSend', function (event, xhr, options) {
   //动画模式
   if (DreamConfig.pjax_animation_style === 'scale') {
     $('html').addClass('pjax-loading')
+  } else if (pjaxAnimationValidStyles.includes(DreamConfig.pjax_animation_style)) {
+    $('.pjax-animation-container').addClass('active')
   }
   document.dispatchEvent(new Event('pjax:beforeSend', {bubbles: true}))
 })
@@ -135,6 +139,8 @@ $(document).on('pjax:success', async function (event, data, status, xhr, options
   /* 已经完成页面渲染 */
   if (DreamConfig.pjax_animation_style === 'scale') {
     $('html').removeClass('pjax-loading')
+  } else if (pjaxAnimationValidStyles.includes(DreamConfig.pjax_animation_style)) {
+    $('.pjax-animation-container').removeClass('active')
   }
 
   const $currentTarget = $($.parseHTML(data, document, true))
@@ -211,6 +217,12 @@ $(document).on('pjax:success', async function (event, data, status, xhr, options
 
 $(document).on('pjax:timeout', function (event, xhr, options) {
   if (!options || !options.serialNumber) return
+  //动画模式
+  if (DreamConfig.pjax_animation_style === 'scale') {
+    $('html').removeClass('pjax-loading')
+  } else if (pjaxAnimationValidStyles.includes(DreamConfig.pjax_animation_style)) {
+    $('.pjax-animation-container').removeClass('active')
+  }
   console.log(`pjax:timeout sn = ${options.serialNumber}`)
   document.dispatchEvent(new Event('pjax:timeout', {bubbles: true}))
 })
@@ -269,6 +281,8 @@ $(document).on('pjax:end', function (event, xhr, options) {
     //动画模式
     if (DreamConfig.pjax_animation_style === 'scale') {
       $('html').removeClass('pjax-loading')
+    } else if (pjaxAnimationValidStyles.includes(DreamConfig.pjax_animation_style)) {
+      $('.pjax-animation-container').removeClass('active')
     }
   }
   document.dispatchEvent(new Event('pjax:end', {bubbles: true}))

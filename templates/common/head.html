@@ -51,6 +51,8 @@ th:with="description=${isPost ? post != null ? post.status.excerpt : singlePage 
   <link rel="stylesheet" th:href="@{/assets/lib/qmsg/qmsg.min.css}">
 
   <link th:if="${theme.config.enhance.cursor_style != 'none'}" rel="stylesheet" th:href="@{/assets/css/cursor.min.css(mew=${theme.spec.version})}">
+  <link rel="stylesheet" th:if="${#lists.contains({'multi-cube', 'wave-pulse', 'orbit-system'}, theme.config.enhance.pjax_config.animation_style)}"
+        th:href="@{/assets/css/animation/pjax_animation.min.css(mew=${theme.spec.version})}">
 
   <th:block th:replace="~{common/config}"/>
 
