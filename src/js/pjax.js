@@ -137,7 +137,17 @@ $(document).on('pjax:success', async function (event, data, status, xhr, options
   /* 初始化pjax加载 */
   initPjax()
 
+  /* 主要内容显示容器class更新 */
   const $currentTarget = $($.parseHTML(data, document, true))
+  const $newContainer = $currentTarget.find('.dream2-container-content-main')
+  if ($newContainer.length) {
+    const $currentContainer = $('.dream2-container-content-main')
+    const newClasses = $newContainer.attr('class') || ''
+    $currentContainer.each(function() {
+      this.className = newClasses
+    })
+    console.log('替换容器[.dream2-container-content-main]的css：' + newClasses)
+  }
   const $head = $('head')
   $head.find('meta').remove()
   $head.find('link[rel="canonical"]').remove()
