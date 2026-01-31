@@ -54,7 +54,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # 编译并打包成 ZIP (执行 gulp release 任务)
+     
+
+      # 任意情况：始终发布到 npm
+      - name: npm publish
+        run: npm publish --tag=latest
+ # 编译并打包成 ZIP (执行 gulp release 任务)
       - name: Build and Pack
         run: npm run release --tag=${{ github.event.release.tag_name || inputs.tag_name }}
 
@@ -68,7 +73,3 @@ jobs:
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # 任意情况：始终发布到 npm
-      - name: npm publish
-        run: npm publish --tag=latest
