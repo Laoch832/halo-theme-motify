@@ -34,15 +34,13 @@ jobs:
       pnpm-version: 10
       node-version: 22
 
-  # 若cd任务未执行、发布的版本是预览版、发布的标签名含有'beta'字样，则此任务也不执行
-  npm-publish:
+  # 编译、打包并发布
+  release:
     permissions:
+      contents: write
       id-token: write
-      contents: read    # 读取仓库代码
-    name: Npm Publish
+    name: Release
     needs: cd
-    # 同样修正：将if条件的多行逻辑简化为单行，避免YAML语法错误
-    if: ${{ (github.event_name == 'release' && !github.event.release.prerelease && !contains(github.event.release.tag_name, 'beta') && !contains(github.event.release.tag_name, 'alpha')) || (github.event_name == 'workflow_dispatch' && !inputs.prerelease && !contains(inputs.tag_name, 'beta') && !contains(inputs.tag_name, 'alpha')) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -57,9 +55,22 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # 编译资源文件，用于上传到npm（兼容两种触发方式的标签名）
-      - name: Build
-        run: npm run build-res --tag=${{ github.event.release.tag_name || inputs.tag_name }}
+      # 编译并打包成 ZIP (执行 gulp release 任务)
+      - name: Build and Pack
+        run: npm run release --tag=${{ github.event.release.tag_name || inputs.tag_name }}
 
+      # 将打包好的 ZIP 文件上传到 GitHub Release 资产
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.zip
+          tag_name: ${{ github.event.release.tag_name || inputs.tag_name }}
+          prerelease: ${{ github.event.release.prerelease || inputs.prerelease || false }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # 仅在正式发布时发布到 npm
       - name: npm publish
+        if: ${{ (github.event_name == 'release' && !github.event.release.prerelease && !contains(github.event.release.tag_name, 'beta') && !contains(github.event.release.tag_name, 'alpha')) || (github.event_name == 'workflow_dispatch' && !inputs.prerelease && !contains(inputs.tag_name, 'beta') && !contains(inputs.tag_name, 'alpha')) }}
         run: npm publish --tag=latest
