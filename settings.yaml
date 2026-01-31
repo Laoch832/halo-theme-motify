@@ -502,6 +502,16 @@ spec:
             - value: 'celebration'
               label: 庆典
         - $formkit: select
+          name: home_mode
+          label: 首页模式
+          value: 'default'
+          help: '选择首页的展示模式。'
+          options:
+            - value: 'default'
+              label: 默认模式
+            - value: 'hitokoto'
+              label: 一言模式
+        - $formkit: select
           name: default_theme
           label: 默认主题模式
           value: 'light'

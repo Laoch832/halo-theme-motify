@@ -113,6 +113,9 @@ task('js', () => {
     return readFile('', './src/js', [])
   }
 
+  // Copy JSON files
+  src('./src/js/**/*.json').pipe(dest(jsPath))
+
   return webpack({
     mode: devModel ? 'development' : 'production',
     entry: getEntryData(),

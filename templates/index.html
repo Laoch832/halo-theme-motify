@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <th:block xmlns:th="https://www.thymeleaf.org"
-          th:insert="~{common/layout :: layout (showTitle = ${site.title}, canonical = ${site.url}, content = ~{::content}, isPost = false, hideSidebar = false)}"
-          th:with="isFirstIndex = ${posts.first}">
+          th:insert="~{common/layout :: layout (showTitle = ${site.title}, canonical = ${site.url}, content = ~{::content}, isPost = false, hideSidebar = ${theme.config.basic_style.home_mode == 'hitokoto' && param.mode == null})}"
+          th:with="isFirstIndex = ${posts.first}, isHitokoto = ${theme.config.basic_style.home_mode == 'hitokoto' && param.mode == null}">
   <th:block th:fragment="content" th:with="isEmpty = ${#lists.isEmpty(posts.items)}">
-    <div th:if="${isEmpty}" class="card card-empty">
-      <i class="ri-inbox-2-fill"></i>
-      [[#{page.index.posts.empty.tip}]]
-    </div>
-    <th:block th:unless="${isEmpty}">
-      <th:block th:replace="~{::firstIndex}"/>
-      <th:block th:replace="~{main/article_list :: articleList (${posts.items})}"/>
-      <th:block th:replace="~{main/pagination :: pagination (${posts}, '/index')}"/>
+    <th:block th:if="${isHitokoto}">
+        <th:block th:replace="~{main/hitokoto :: hitokoto}"/>
+    </th:block>
+    <th:block th:unless="${isHitokoto}">
+        <div th:if="${isEmpty}" class="card card-empty">
+          <i class="ri-inbox-2-fill"></i>
+          [[#{page.index.posts.empty.tip}]]
+        </div>
+        <th:block th:unless="${isEmpty}">
+          <th:block th:replace="~{::firstIndex}"/>
+          <th:block th:replace="~{main/article_list :: articleList (${posts.items})}"/>
+          <th:block th:replace="~{main/pagination :: pagination (${posts}, '/index')}"/>
+        </th:block>
     </th:block>
   </th:block>
 

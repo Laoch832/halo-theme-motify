@@ -1,0 +1,36 @@
+
+<th:block th:fragment="hitokoto" xmlns:th="https://www.thymeleaf.org">
+    <div class="hitokoto-home" id="hitokoto-home">
+        <div class="hitokoto-bg" id="hitokoto-bg"></div>
+        <div class="hitokoto-container">
+            <div class="hitokoto-left">
+                <div class="hitokoto-date" id="hitokoto-date"></div>
+                <div class="hitokoto-text" id="hitokoto-text">正在加载...</div>
+                <div class="hitokoto-from" id="hitokoto-from"></div>
+                <div class="hitokoto-actions">
+                    <a href="/index?mode=blog" class="action-btn">
+                        <i class="ri-home-4-line"></i>
+                        <span>进入主页</span>
+                    </a>
+                    <a href="javascript:void(0)" class="action-btn" id="hitokoto-refresh">
+                        <i class="ri-refresh-line"></i>
+                        <span>刷新一言</span>
+                    </a>
+                </div>
+            </div>
+            <div class="hitokoto-right">
+                <div class="image-card" id="hitokoto-image">
+                    <div class="card-footer">
+                        <span class="card-text">Random Moment</span>
+                        <i class="ri-heart-fill card-icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="home-entry">
+            <a href="/index?mode=blog" class="entry-btn" title="进入主页">
+                <i class="ri-arrow-right-line"></i>
+            </a>
+        </div>
+    </div>
+</th:block>

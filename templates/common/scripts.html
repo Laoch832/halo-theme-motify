@@ -7,6 +7,7 @@
             th:src="@{/assets/lib/swiper@11.2.6/swiper-bundle.min.js}"></script>
     <script th:src="@{/assets/lib/qmsg/qmsg.min.js}"></script>
     <script th:src="@{/assets/js/common.min.js(mew=${theme.spec.version})}"></script>
+    <script th:if="${theme.config.basic_style.home_mode == 'hitokoto' && #request.requestURI == '/'}" th:src="@{/assets/js/hitokoto.min.js(mew=${theme.spec.version})}"></script>
 
     <th:block th:if="${isPost}">
         <script th:if="${isPost}" data-pjax th:src="@{/assets/lib/clipboard@2.0.11/clipboard.min.js}"></script>
