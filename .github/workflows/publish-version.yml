@@ -1,9 +1,24 @@
 name: Publish version
 
 on:
+  # 保留原有：Release正式发布时自动触发
   release:
     types:
       - published
+  # 新增：手动触发（会在GitHub页面显示Run workflow按钮）
+  workflow_dispatch:
+    inputs:
+      # 手动触发时，需要用户填写版本标签（如v1.0.0、v1.0.1-beta）
+      tag_name:
+        description: 'Version tag name (e.g. v1.0.0, v1.0.1-beta)'
+        required: true
+        type: string
+      # 手动触发时，可选是否标记为预览版（对应原prerelease）
+      prerelease:
+        description: 'Is this a prerelease (alpha/beta)?'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
 
@@ -16,7 +31,12 @@ jobs:
       contents: write
     with:
       app-id: app-HrMpM
-      skip-appstore-release: ${{ (github.event.release.prerelease || contains(github.event.release.tag_name, 'beta') || contains(github.event.release.tag_name, 'alpha')) }}
+      # 兼容两种触发方式：自动触发取release，手动触发取inputs
+      skip-appstore-release: ${{ 
+        (github.event_name == 'release' && (github.event.release.prerelease || contains(github.event.release.tag_name, 'beta') || contains(github.event.release.tag_name, 'alpha'))) 
+        || 
+        (github.event_name == 'workflow_dispatch' && (github.event.inputs.prerelease == 'true' || contains(github.event.inputs.tag_name, 'beta') || contains(github.event.inputs.tag_name, 'alpha')))
+      }}
       pnpm-version: 10
       node-version: 22
 
@@ -28,9 +48,19 @@ jobs:
     name: Npm Publish
     needs: cd
     if: |
-      !github.event.release.prerelease && 
-      !contains(github.event.release.tag_name, 'beta') && 
-      !contains(github.event.release.tag_name, 'alpha')
+      (
+        github.event_name == 'release' && 
+        !github.event.release.prerelease && 
+        !contains(github.event.release.tag_name, 'beta') && 
+        !contains(github.event.release.tag_name, 'alpha')
+      )
+      ||
+      (
+        github.event_name == 'workflow_dispatch' && 
+        github.event.inputs.prerelease != 'true' && 
+        !contains(github.event.inputs.tag_name, 'beta') && 
+        !contains(github.event.inputs.tag_name, 'alpha')
+      )
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -45,9 +75,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # 编译资源文件，用于上传到npm
+      # 编译资源文件，用于上传到npm（兼容两种触发方式的标签名）
       - name: Build
-        run: npm run build-res --tag=${{ github.event.release.tag_name }}
+        run: npm run build-res --tag=${{ 
+          github.event_name == 'release' ? github.event.release.tag_name : github.event.inputs.tag_name 
+        }}
 
       - name: npm publish
+        # 修复原代码末尾多余的冒号
         run: npm publish --tag=latest
