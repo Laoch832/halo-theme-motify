@@ -28,9 +28,8 @@ jobs:
       contents: write
     with:
       app-id: app-HrMpM
-      # 关键修正：将多行表达式简化为单行，避免YAML缩进解析错误
-      # 所有逻辑保留，仅调整为单行书写，符合YAML语法规范
-      skip-appstore-release: ${{ (github.event_name == 'release' && (github.event.release.prerelease || contains(github.event.release.tag_name, 'beta') || contains(github.event.release.tag_name, 'alpha'))) || (github.event_name == 'workflow_dispatch' && (inputs.prerelease || contains(inputs.tag_name, 'beta') || contains(inputs.tag_name, 'alpha'))) }}
+      # 任意情况：不再跳过 App Store 发布，确保所有版本都能同步
+      skip-appstore-release: false
       pnpm-version: 10
       node-version: 22
 
@@ -70,7 +69,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # 仅在正式发布时发布到 npm
+      # 任意情况：始终发布到 npm
       - name: npm publish
-        if: ${{ (github.event_name == 'release' && !github.event.release.prerelease && !contains(github.event.release.tag_name, 'beta') && !contains(github.event.release.tag_name, 'alpha')) || (github.event_name == 'workflow_dispatch' && !inputs.prerelease && !contains(inputs.tag_name, 'beta') && !contains(inputs.tag_name, 'alpha')) }}
         run: npm publish --tag=latest
