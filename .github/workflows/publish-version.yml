@@ -8,12 +8,10 @@ on:
   # 新增：手动触发（会在GitHub页面显示Run workflow按钮）
   workflow_dispatch:
     inputs:
-      # 手动触发时，需要用户填写版本标签（如v1.0.0、v1.0.1-beta）
       tag_name:
         description: 'Version tag name (e.g. v1.0.0, v1.0.1-beta)'
         required: true
         type: string
-      # 手动触发时，可选是否标记为预览版（对应原prerelease）
       prerelease:
         description: 'Is this a prerelease (alpha/beta)?'
         required: false
@@ -21,7 +19,6 @@ on:
         default: false
 
 jobs:
-
   # 非正式版执行时，不发布到商店
   cd:
     uses: hcjike/reusable-workflows/.github/workflows/theme-cd.yaml@v3
@@ -31,12 +28,9 @@ jobs:
       contents: write
     with:
       app-id: app-HrMpM
-      # 兼容两种触发方式：自动触发取release，手动触发取inputs
-      skip-appstore-release: ${{ 
-        (github.event_name == 'release' && (github.event.release.prerelease || contains(github.event.release.tag_name, 'beta') || contains(github.event.release.tag_name, 'alpha'))) 
-        || 
-        (github.event_name == 'workflow_dispatch' && (github.event.inputs.prerelease == 'true' || contains(github.event.inputs.tag_name, 'beta') || contains(github.event.inputs.tag_name, 'alpha')))
-      }}
+      # 关键修正：将多行表达式简化为单行，避免YAML缩进解析错误
+      # 所有逻辑保留，仅调整为单行书写，符合YAML语法规范
+      skip-appstore-release: ${{ (github.event_name == 'release' && (github.event.release.prerelease || contains(github.event.release.tag_name, 'beta') || contains(github.event.release.tag_name, 'alpha'))) || (github.event_name == 'workflow_dispatch' && (github.event.inputs.prerelease == 'true' || contains(github.event.inputs.tag_name, 'beta') || contains(github.event.inputs.tag_name, 'alpha'))) }}
       pnpm-version: 10
       node-version: 22
 
@@ -47,20 +41,8 @@ jobs:
       contents: read    # 读取仓库代码
     name: Npm Publish
     needs: cd
-    if: |
-      (
-        github.event_name == 'release' && 
-        !github.event.release.prerelease && 
-        !contains(github.event.release.tag_name, 'beta') && 
-        !contains(github.event.release.tag_name, 'alpha')
-      )
-      ||
-      (
-        github.event_name == 'workflow_dispatch' && 
-        github.event.inputs.prerelease != 'true' && 
-        !contains(github.event.inputs.tag_name, 'beta') && 
-        !contains(github.event.inputs.tag_name, 'alpha')
-      )
+    # 同样修正：将if条件的多行逻辑简化为单行，避免YAML语法错误
+    if: ${{ (github.event_name == 'release' && !github.event.release.prerelease && !contains(github.event.release.tag_name, 'beta') && !contains(github.event.release.tag_name, 'alpha')) || (github.event_name == 'workflow_dispatch' && github.event.inputs.prerelease != 'true' && !contains(github.event.inputs.tag_name, 'beta') && !contains(github.event.inputs.tag_name, 'alpha')) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -77,10 +59,7 @@ jobs:
 
       # 编译资源文件，用于上传到npm（兼容两种触发方式的标签名）
       - name: Build
-        run: npm run build-res --tag=${{ 
-          github.event_name == 'release' ? github.event.release.tag_name : github.event.inputs.tag_name 
-        }}
+        run: npm run build-res --tag=${{ github.event_name == 'release' ? github.event.release.tag_name : github.event.inputs.tag_name }}
 
       - name: npm publish
-        # 修复原代码末尾多余的冒号
         run: npm publish --tag=latest
